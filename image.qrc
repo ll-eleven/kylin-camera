@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/delete.png</file>
+        <file>image/close.png</file>
+        <file>image/max.png</file>
+        <file>image/min.png</file>
+        <file>image/funclist.png</file>
+        <file>image/top.png</file>
+        <file>image/Screenshot@2x.png</file>
+        <file>image/burst1.png</file>
+        <file>image/burst2.png</file>
+        <file>image/camera1.png</file>
+        <file>image/camera2.png</file>
+        <file>image/luxiang-kaishi.png</file>
+        <file>image/luxiang-zanting.png</file>
+        <file>image/paizhao-dianji.png</file>
+        <file>image/paizhao-kaishi.png</file>
+        <file>image/picture1.png</file>
+        <file>image/picture2.png</file>
+        <file>image/screen1.png</file>
+        <file>image/screen2.png</file>
+        <file>image/Screenshot.png</file>
+        <file>image/share1.png</file>
+        <file>image/share2.png</file>
+        <file>image/top1.png</file>
+        <file>image/top2.png</file>
+        <file>image/vedio1.png</file>
+        <file>image/vedio2.png</file>
+        <file>image/maike-off .svg</file>
+        <file>image/maike-on .svg</file>
+        <file>image/zanting.svg</file>
+        <file>image/setting2.png</file>
+        <file>image/setting1.png</file>
+        <file>image/zanting1.png</file>
+    </qresource>
+</RCC>
