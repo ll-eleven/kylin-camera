@@ -6,7 +6,7 @@
 #include <QList>
 #include <QDesktopWidget>
 #include <QThread>
-
+#include <QPoint>
 
 MainWindow::MainWindow(QWidget *parent)
   : QWidget(parent)
@@ -33,15 +33,17 @@ void MainWindow ::setCommonUI(){
     titleBarWid = new QWidget;
     titleBarWid->setObjectName("titleBarWid");
     // 标题栏
-    pTitleBar = new TitleBar;
+    pTitleBar = new TitleBar(this);
 //    installEventFilter(pTitleBar);
-    pTitleBar->setFixedHeight(50);
+    pTitleBar->setFixedHeight(42);
 //    pTitleBar->setMinimumWidth(500);
     camerapage = new CameraPage;
     btnPage = new Button;
 //    btnPage = new QWidget;
     viewpage = new PictureViewPage;
     set = new Setting(this);
+    viewpage->setWindowFlags(Qt::FramelessWindowHint);
+
 
     QVBoxLayout *funcListLayout = new QVBoxLayout();
     funcListLayout->addWidget(set);
@@ -61,8 +63,9 @@ void MainWindow ::setCommonUI(){
 
     camerapage->setMinimumSize(800,450);
     viewpage->setFixedWidth(268);
-
+    viewpage->hide();
     camerapage->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
 //  pTitleBar->setFuncLabel(tr("标准"));
 
 
@@ -70,7 +73,7 @@ void MainWindow ::setCommonUI(){
     mainLayout = new QHBoxLayout;
     pictureLayout = new QGridLayout;
 
-    btnPage->setFixedHeight(55);
+    btnPage->setFixedHeight(48);
     pictureLayout->addWidget(viewpage);
     pLayout->setSpacing(0);
     pLayout->setMargin(0);
@@ -83,9 +86,11 @@ void MainWindow ::setCommonUI(){
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
     mainLayout->addLayout(pLayout);
-    mainLayout->addLayout(pictureLayout);
+    mainLayout->addWidget(viewpage);
+
 
     this->setLayout(mainLayout);
+     this->layout()->setSizeConstraint(QLayout::SetMinimumSize);
     // 显示和隐藏功能列表
     connect(pTitleBar->funcListButton,SIGNAL(clicked(bool)),this,SLOT(funcListHandle(bool)));
     connect(btnPage->picture,SIGNAL(clicked(bool)),this,SLOT(pictureview(bool)));
@@ -93,6 +98,7 @@ void MainWindow ::setCommonUI(){
 
     connect(btnPage->vedio,SIGNAL(clicked(bool)),camerapage,SLOT(setMediaRecorder()));
     connect(btnPage->capture,SIGNAL(clicked(bool)),camerapage,SLOT(setImageCapture()));
+    connect(camerapage->mediaRecorder, SIGNAL(durationChanged(qint64)), camerapage, SLOT(updateRecordTime()));
 
     connect(btnPage->cheese,SIGNAL(clicked()),camerapage->imageCapture,SLOT(capture()));
     connect(camerapage->imageCapture,SIGNAL(imageCaptured(int,QImage)),this,SLOT(imageDisplay(int,QImage)));
@@ -105,13 +111,9 @@ void MainWindow ::setCommonUI(){
     connect(btnPage->cheese_stop,SIGNAL(clicked()),camerapage,SLOT(stop()));
 
 //    connect(camerapage->mediaRecorder,SIGNAL(imagevedio()),this,SLOT());
-
-
-
 //    connect(pTitleBar->m_pTopButton,SIGNAL(clicked(bool)),this,SLOT(stayTop()));
 
     pTitleBar->setStyleSheet("background-color:#000000;border-top-left-radius:6px");
-//    btnPage->setStyleSheet("background-color:#000000");
 
 }
 
@@ -124,6 +126,9 @@ void MainWindow::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 }
 
+//void MainWindow::QMouseEvent(){
+
+//}
 
 void MainWindow::funcListHandle(bool){
 
@@ -133,6 +138,7 @@ void MainWindow::funcListHandle(bool){
   }
   else {
       this->setWid->hide();
+
   }
 }
 
@@ -178,12 +184,29 @@ void MainWindow::funcListHandle(bool){
 //}
 
 void MainWindow::pictureview(bool){
-
+    //打开相册
     if(this->viewpage->isHidden()){
         viewpage->show();
       }
+    //隐藏相册
     else{
-        viewpage->hide();
+        int w = this->width() - 268;
+        int h = this->height();
+        QPoint point = this->mapToGlobal(QPoint(0,0));
+        qDebug() << point;
+
+        if(pTitleBar->m_maxButtonPressed){
+            viewpage->hide();
+            this->setMinimumSize(800,540);
+         }
+        else
+        {
+          viewpage->hide();
+          this->layout()->setGeometry(QRect(point.x(),point.y(),800,540));
+          this->setFixedSize(w,h);
+          this->setMinimumSize(800,540);
+          this->setMaximumSize(10086,10086);
+        }
       }
 }
 void MainWindow::imageSaved(int id, const QString &fileName)
@@ -191,6 +214,8 @@ void MainWindow::imageSaved(int id, const QString &fileName)
     Q_UNUSED(id);
     Q_UNUSED(fileName);
 }
+
+//将图片显示在listwidget上
 
 
 void MainWindow::imageDisplay(int i,QImage image)
