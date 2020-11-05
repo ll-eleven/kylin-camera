@@ -8,6 +8,7 @@
 #include <QBoxLayout>
 #include <QCameraViewfinder>
 #include <QCamera>
+#include <QCameraInfo>
 #include <QPixmap>
 #include <QMediaServiceCameraInfoInterface>
 #include <QMediaService>
@@ -42,6 +43,7 @@ public slots:
   void record();
   void stop();
   void pause();
+  void displayCameraError();
 private:
 
   QLabel *lab;

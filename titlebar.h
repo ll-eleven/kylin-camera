@@ -20,7 +20,8 @@ public:
   QPushButton *m_pTopButton;      // 界面置顶按钮
   QPushButton *funcListButton;
   // 模式和功能列表按钮
-
+  bool m_leftButtonPressed;       // 鼠标左键按下标记
+  bool m_maxButtonPressed;        // 最大化按钮按下
 
   // 设置模式或功能名称
   void setFuncLabel(QString label);
@@ -56,8 +57,7 @@ private:
     QPushButton *m_pCloseButton;    // 关闭按钮
     QPoint m_start;                 // 起始点
     QPoint m_end;                   // 结束点
-    bool m_leftButtonPressed;       // 鼠标左键按下标记
-    bool m_maxButtonPressed;
+
 };
 
 #endif // TITLEBAR_H

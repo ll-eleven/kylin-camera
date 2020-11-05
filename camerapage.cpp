@@ -4,8 +4,8 @@
 CameraPage::CameraPage()
 {
 
-  camera = new QCamera;
-  lab = new QLabel;
+  camera = new QCamera(QCameraInfo::defaultCamera());
+  lab = new QLabel(this);
 //  camerainfo = new QCameraInfo;
   statusbar = new QStatusBar(this);
   viewfinder = new QCameraViewfinder(this);
@@ -30,9 +30,11 @@ CameraPage::CameraPage()
   camera->setCaptureMode(QCamera::CaptureStillImage);
 
   camera->start();
-  statusbar->showMessage(tr("dsd"));
+  statusbar->setStyleSheet("color:#FFFFFF");
 
-
+//  statusbar->setStyleSheet("background-color:#FFFFFF");
+//  statusbar->setGeometry(0,0,50,50);
+  statusbar->raise();
   //设置摄像头
   QCameraViewfinderSettings viewfinderSettings;
 //  viewfinderSettings.setResolution(640, 480);
@@ -40,6 +42,8 @@ CameraPage::CameraPage()
   viewfinderSettings.setMaximumFrameRate(30.0);
 
   camera->setViewfinderSettings(viewfinderSettings);
+
+  connect(camera, SIGNAL(error(QCamera::Error)), this, SLOT(displayCameraError()));
 //  connect(Button::cheese,SIGNAL(clicked()),imageCapture,SLOT(capture()));
 //  connect(imageCapture,SIGNAL(imageCaptured(int,QImage)),this,SLOT(imageDisplay(int,QImage)));
 //  connect(imageCapture, SIGNAL(imageSaved(int,QString)), this, SLOT(imageSavedSlot(int,QString)));
@@ -47,11 +51,14 @@ CameraPage::CameraPage()
 //  camera->captureMode(QCamera::CaptureVideo);
 }
 
+void CameraPage::displayCameraError(){
+  qDebug() << "taida";
+  lab->setText("未发现设备");
+}
+
 void CameraPage::setMediaRecorder(){
 
   camera->setCaptureMode(QCamera::CaptureVideo);
-
-
 }
 void CameraPage::setImageCapture(){
 

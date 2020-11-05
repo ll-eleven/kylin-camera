@@ -52,7 +52,7 @@ TitleBar::TitleBar(QWidget *parent)
   m_pMaximizeButton->setObjectName("maximizeButton");
   m_pCloseButton->setObjectName("closeButton");
 
-  m_pFuncLabel->setText("摄像头");
+  m_pFuncLabel->setText("麒麟摄像头");
   m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;font-family:SourceHanSansCN-Regular;");
   QString btnStyle = /*"QPushButton{background-color:#FFFFFF}"*/
                      "QPushButton{border-radius:4px;}"
@@ -66,11 +66,12 @@ TitleBar::TitleBar(QWidget *parent)
   // 设置按钮布局
   QHBoxLayout *pLayout = new QHBoxLayout(this);
   pLayout->addWidget(icon);
+  pLayout->addSpacing(5);
   pLayout->addWidget(m_pFuncLabel);
   pLayout->addSpacing(10);
-//  pLayout->addWidget(funcListButton);
+  pLayout->addWidget(funcListButton);
   pLayout->addWidget(m_pMinimizeButton);
-  pLayout->addWidget(m_pMaximizeButton);
+//  pLayout->addWidget(m_pMaximizeButton);
   pLayout->addWidget(m_pCloseButton);
   pLayout->setSpacing(0);
   pLayout->setContentsMargins(10, 0, 10, 0);
@@ -131,7 +132,7 @@ void TitleBar::onClicked()
                 pWindow->showMaximized();
                 }
               else{
-                pWindow->showNormal();
+                  pWindow->showNormal();
                 }
                 m_maxButtonPressed = !m_maxButtonPressed;
         }
