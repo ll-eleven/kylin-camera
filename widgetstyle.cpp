@@ -1,4 +1,5 @@
 #include "widgetstyle.h"
+#include <QPainterPath>
 
 void widgetstyle::paintEvent(QPaintEvent *event)    //重绘窗口
 {
