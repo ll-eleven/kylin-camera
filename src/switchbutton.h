@@ -25,7 +25,7 @@ public:
 
     // 设置不可用颜色
     void setDisbaledColor(QColor color);
-
+    bool m_bChecked;         // 是否选中
 protected:
     // 绘制开关
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
@@ -52,7 +52,7 @@ private slots:
     void onTimeout();
 
 private:
-    bool m_bChecked;         // 是否选中
+
     QColor m_background;     // 背景颜色
     QColor m_checkedColor;   // 选中颜色
     QColor m_disabledColor;  // 不可用颜色

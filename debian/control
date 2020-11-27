@@ -1,8 +1,11 @@
 Source: kylin-camera
 Section: utils
 Priority: optional
-Maintainer: songxikang <fengyongfan@kylinos.cn>
+Maintainer: songxikang <songxikang@kylinos.cn>
 Build-Depends: debhelper,
+			kylincameralibs,
+			libx264-dev,
+			libgpac-dev,
             qtbase5-dev,
             qt5-qmake,
             qtchooser,
@@ -17,6 +20,10 @@ Homepage: https://github.com/ubuntukylin/kylin-camera
 
 Package: kylin-camera
 Architecture: any
-Depends: ${shlibs:Depends}, 
+Depends: libqt5sql5-sqlite,
+		kylincameralibs,
+		libx264-dev,
+		libgpac-dev,
+         ${shlibs:Depends}, 
 		 ${misc:Depends}
 Description: kylin-camera

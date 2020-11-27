@@ -6,10 +6,10 @@
 #include <QListWidgetItem>
 #include <QPushButton>
 #include <QLabel>
-
+//#include "mainwindow.h"
 class TitleBar : public QWidget
 {
-
+Q_OBJECT
 public:
   explicit TitleBar(QWidget *parent = 0);
   ~TitleBar();
@@ -22,9 +22,9 @@ public:
   // 模式和功能列表按钮
   bool m_leftButtonPressed;       // 鼠标左键按下标记
   bool m_maxButtonPressed;        // 最大化按钮按下
-
+  bool m_setButtonPressed;
   // 设置模式或功能名称
-  void setFuncLabel(QString label);
+//  void setFuncLabel(QString label);
 
 protected:
 
@@ -40,9 +40,9 @@ private slots:
 
     // 进行置顶、最小化、关闭操作
     void onClicked();
-    void max_change();
+//    void max_change();
     // 窗口置顶操作
-    void stayTop();
+//    void stayTop();
 
 private:
 
