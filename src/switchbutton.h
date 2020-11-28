@@ -52,7 +52,7 @@ private slots:
     void onTimeout();
 
 private:
-
+    qreal m_width;
     QColor m_background;     // 背景颜色
     QColor m_checkedColor;   // 选中颜色
     QColor m_disabledColor;  // 不可用颜色

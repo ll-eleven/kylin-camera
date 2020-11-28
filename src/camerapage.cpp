@@ -45,7 +45,7 @@ CameraPage::CameraPage(QWidget *parent)
       stackedlayout->setSpacing(0);
       stackedlayout->setGeometry(QRect(0,100,500,500));
       stackedlayout->addWidget(videoDisplay);
-
+      has_device = 1;
 
 //      camera->camera_set_param()
 
@@ -55,6 +55,7 @@ CameraPage::CameraPage(QWidget *parent)
     //未接入设备，关闭应用
     else{
         QMessageBox::question(this,tr("No devices were found"),tr("No devices were found"),0);
+        has_device = 0;
 //        exit(-1);
       }
 //  ui->verticalLayout->addWidget(videoDisplay);

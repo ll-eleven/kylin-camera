@@ -44,7 +44,6 @@ public:
   //当前路径
   QString current_dir;
   QLabel *current_dir_lab;
-  QSettings *setting;
 
 signals:
   void dir_change();

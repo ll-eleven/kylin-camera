@@ -32,8 +32,9 @@ Setting::Setting(QWidget *parent)
 
 //    current_dir = new QString;
     current_dir_lab = new QLabel;
-
-    current_dir_lab->setText(":/home");
+    delaybtn->setFixedWidth(40);
+    mirrorbtn->setFixedWidth(40);
+//    current_dir_lab->setText(":/home");
     current_dir_lab->setStyleSheet(
           "font-size: 12px;"
           "font-family: Noto Sans CJK SC;"
@@ -42,6 +43,7 @@ Setting::Setting(QWidget *parent)
           "color: rgba(255, 255, 255, 0.5);"
           "opacity: 1;"
           );
+//    current_dir_lab->setSizePolicy();
     delaylab->setText(tr("Delayed shooting"));
     mirrorlab->setText(tr("Image mirroring"));
     dirlab->setText(tr("The image path"));
@@ -127,7 +129,9 @@ Setting::Setting(QWidget *parent)
 //void Setting::dir_change(){}
 void Setting::dir_click(){
   current_dir = QFileDialog::getExistingDirectory(nullptr,tr("Select the directory"),":/home",QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-  current_dir_lab->setText(current_dir);
-  qDebug() << current_dir;
+  if(QDir(current_dir).exists() && current_dir != ""){
+    current_dir_lab->setText(current_dir);
+  }
+  qDebug() << "current_dir"<< current_dir;
   emit dir_change();
 }

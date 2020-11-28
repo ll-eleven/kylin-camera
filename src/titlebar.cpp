@@ -38,7 +38,7 @@ TitleBar::TitleBar(QWidget *parent)
 
   icon = new QLabel;//图标
   icon->setPixmap(QPixmap::fromImage(QImage(":/image/Screenshot@2x.png")));
-  funcListButton->setIcon(QIcon(":/image/setting1.png"));
+  funcListButton->setIcon(QIcon(":/image/funclist.png"));
 //  m_pTopButton->setIcon(QIcon(":/image/top.png"));
   m_pMinimizeButton->setIcon(QIcon(":/image/min.png"));
   m_pCloseButton->setIcon(QIcon(":/image/close.png"));

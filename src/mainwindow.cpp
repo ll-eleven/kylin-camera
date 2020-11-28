@@ -12,34 +12,36 @@
 MainWindow::MainWindow(QWidget *parent)
   : QWidget(parent)
 {
+
+  //从配置文件读取
+  imagePath = setting->value("save_path").toString();
+
+  if(imagePath=="")
+  {
+      imagePath=QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+      QString locale = QLocale::system().name();
+      if (locale == "zh_CN")
+      {
+          imagePath+=QStringLiteral("/图片/麒麟摄像头/");
+      }
+      else
+      {
+          imagePath+="/Pictures/kylin-camera/";
+      }
+      QDir dir(imagePath);
+      if (!dir.exists()) {
+          dir.mkpath(imagePath);
+      }
+      qDebug()<<"path:"<<imagePath;
+  }
+
+  //从配置文件读取，默认为3
+  dead_time_sec=3;
     setCommonUI();
 
     this->setStyleSheet("MainWindow{background-color:#000000;border-radius:6px}");
 
-    //从配置文件读取
-    imagePath="";
 
-    if(imagePath=="")
-    {
-        imagePath=QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-        QString locale = QLocale::system().name();
-        if (locale == "zh_CN")
-        {
-            imagePath+=QStringLiteral("/图片/麒麟摄像头/");
-        }
-        else
-        {
-            imagePath+="/Pictures/kylin-camera/";
-        }
-        QDir dir(imagePath);
-        if (!dir.exists()) {
-            dir.mkpath(imagePath);
-        }
-        qDebug()<<"path:"<<imagePath;
-    }
-
-    //从配置文件读取，默认为3
-    dead_time_sec=3;
 }
 
 MainWindow::~MainWindow()
@@ -72,6 +74,7 @@ void MainWindow ::setCommonUI(){
         "box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.75);"
         "opacity: 1;"
     );
+    setWid->current_dir_lab->setText(imagePath);
     setWid->raise();
     setWid->setGeometry(QRect(476,40,220, 202));
     setWid->hide();
@@ -128,22 +131,8 @@ void MainWindow ::setCommonUI(){
     connect(pTitleBar->funcListButton,SIGNAL(clicked(bool)),this,SLOT(funcListHandle(bool)));
     connect(btnPage->picture,SIGNAL(clicked(bool)),this,SLOT(pictureview(bool)));
 
-    //拍照模式
-//    connect(btnPage->vedio,SIGNAL(clicked(bool)),camerapage,SLOT(setMediaRecorder()));
-//    connect(btnPage->capture,SIGNAL(clicked(bool)),camerapage,SLOT(setImageCapture()));
-//    connect(camerapage->mediaRecorder, SIGNAL(durationChanged(qint64)), camerapage, SLOT(updateRecordTime()));
 
-//    connect(btnPage->cheese,SIGNAL(clicked()),camerapage->imageCapture,SLOT(capture()));
-//    connect(camerapage->imageCapture,SIGNAL(imageCaptured(int,QImage)),this,SLOT(imageDisplay(int,QImage)));
-//    connect(camerapage->imageCapture,SIGNAL(imageSaved(int,QString)),this,SLOT(imageSaved(int,QString)));
-
-    //录像模式
-
-//    connect(btnPage->cheese_vedio,SIGNAL(clicked()),camerapage,SLOT(record()));
-//    connect(btnPage->stop,SIGNAL(clicked(bool)),camerapage,SLOT(pause()));
-//    connect(btnPage->cheese_stop,SIGNAL(clicked()),camerapage,SLOT(stop()));
-
-    //动态链接库
+    //
     connect(btnPage->cheese, SIGNAL(clicked()), this, SLOT(clickPhoto()));
     connect(this,SIGNAL(click_vedio()),this,SLOT(vedioDisplay()));
     connect(btnPage->cheese_vedio, SIGNAL(clicked()), this, SLOT(clickStartRecord()));
@@ -202,6 +191,8 @@ QString MainWindow::creatName()
     QDateTime time= QDateTime::currentDateTime();
     return time.toString("yyyyMMdd_hhmmss")+"_"+QString::number(rand() % 10);
 }
+
+
 void MainWindow::takePhoto(QString name ,bool isvideo)
 {
     QString path;
@@ -209,12 +200,17 @@ void MainWindow::takePhoto(QString name ,bool isvideo)
     if(isvideo)path+=".";
     path+=name;
     path+=".jpg";
-    camerapage->camera->camera_take_photo(path.toLocal8Bit().data());
+
+    if(camerapage->has_device){
+      camerapage->camera->camera_take_photo(path.toLocal8Bit().data());
+    }
     if(isvideo)
     {
         //处理图片，将播放键的图片合成进去
     }
 }
+
+
 //录像
 void MainWindow::clickStartRecord()
 {
@@ -222,7 +218,9 @@ void MainWindow::clickStartRecord()
     fileNameTemp=name;
     takePhoto(name,true);
     QString tmp=imagePath+name+".mp4";
-    camerapage->camera->camera_start_record(tmp.toLocal8Bit().data());
+    if(camerapage->has_device){
+      camerapage->camera->camera_start_record(tmp.toLocal8Bit().data());
+    }
 }
 
 
@@ -403,12 +401,17 @@ void MainWindow::delete_picture()
     startCommend(temp);
     viewpage->listWidget->takeItem(index);
 }
+
+
 //更改保存路径
 void MainWindow::save_dir_change(){
   imagePath = setWid->current_dir;
+  setting->setValue("save_path",imagePath);
   imagePath.append("/");
   qDebug() << "save dir change" << imagePath;
 }
+
+
 
 void MainWindow::timeEvent()
 {

@@ -17,6 +17,7 @@ SwitchButton::SwitchButton(QWidget *parent)
     // 鼠标滑过光标形状 - 手型
     setCursor(Qt::PointingHandCursor);
     // 连接信号槽
+
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
@@ -116,7 +117,7 @@ void SwitchButton::onTimeout()
 {
     if (m_bChecked) {
         m_nX += 1;
-        if (m_nX >= width() - m_nHeight)
+        if (m_nX >= width() - (m_nHeight)/1.33)
             m_timer.stop();
     } else {
         m_nX -= 1;

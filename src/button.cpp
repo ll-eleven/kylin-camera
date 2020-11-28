@@ -4,6 +4,7 @@
 Button::Button(QWidget *parent)
   : QWidget(parent)
 {
+  set = new QSettings;
   btnLayout = new QHBoxLayout;
 
   capture = new QPushButton ;
@@ -48,8 +49,6 @@ Button::Button(QWidget *parent)
       "opacity: 1;"
       "border-radius: 10px;";
 
-  cheese_vedio->hide();
-  cheese_stop->hide();
   cheese_stop->setFixedSize(50,50);
   cheese_vedio->setFixedSize(50,50);
   cheese->setFixedSize(50,50);
@@ -57,6 +56,30 @@ Button::Button(QWidget *parent)
   vedio->setFixedSize(42,32);
   picture->setFixedSize(42,32);
   Burst->setFixedSize(42,32);
+
+
+  cheese_vedio->hide();
+  cheese_stop->hide();
+
+  if(set->value("model").toInt()){
+    cheese->show();
+    cheese_vedio->hide();
+    cheese_stop->hide();
+    voice->setIcon(QIcon(""));
+    stop->setIcon(QIcon(""));
+    vedio_mode = false;
+    capture->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
+    vedio->setStyleSheet("QPushButton{background-color:#000000}");
+  }
+  else{
+      vedio_mode = true;
+      voice->setIcon(QIcon(":/image/maike-on .svg"));
+      stop->setIcon(QIcon(":/image/zanting1.png"));
+      vedio->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
+      capture->setStyleSheet("QPushButton{background-color:#000000}");
+      cheese->hide();
+      cheese_vedio->show();
+    }
 //  this->setAttribute(Qt::WA_TranslucentBackground, false);
 //  voice->hide();
 //  this->setStyleSheet("background-color:#FFFFFF");
@@ -69,11 +92,10 @@ Button::Button(QWidget *parent)
                      "QPushButton:hover{background-color:rgb(180,180,180);}"
                      "QPushButton:pressed{background-color:rgb(180,180,180);}";
 
-  capture->setStyleSheet(btnStyle);
-  cheese->setIcon(QIcon(":/image/paizhao-kaishi.png"));
+//  capture->setStyleSheet(btnStyle);
   capture->setIcon(QIcon(":/image/camera1.png"));
   vedio->setIcon(QIcon(":/image/vedio1.png"));
-//  cheese->setIcon(QIcon(":/image/paizhao-kaishi.png"));
+  cheese->setIcon(QIcon(":/image/paizhao-kaishi.png"));
 //  voice->setIcon(QIcon(":/image/maike-on .svg"));
   Burst->setIcon(QIcon(":/image/burst1.png"));
   picture->setIcon(QIcon(":/image/picture1.png"));
@@ -138,6 +160,7 @@ void Button::capture_click(){
   vedio_mode = false;
   capture->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
   vedio->setStyleSheet("QPushButton{background-color:#000000}");
+  set->setValue("model",1);
 }
 
 void Button::vedio_click(){
@@ -146,9 +169,9 @@ void Button::vedio_click(){
     stop->setIcon(QIcon(":/image/zanting1.png"));
     vedio->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
     capture->setStyleSheet("QPushButton{background-color:#000000}");
-
     cheese->hide();
     cheese_vedio->show();
+    set->setValue("model",0);
 }
 void Button::cheese_click(){
     //拍照模式

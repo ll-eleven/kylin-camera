@@ -53,7 +53,7 @@ public:
   void setpicturepage();
 
 
-
+  QSettings *setting = new QSettings;
   QPoint temp;
   bool settingShow = false;
 
@@ -105,7 +105,7 @@ private:
   //保存路径
   QString imagePath;
   QMenu *menu;
-  QSettings *setting;
+
 
   QTimer *timer;
   //倒计时
