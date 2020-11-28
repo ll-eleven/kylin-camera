@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QLayout>
 #include <QWidget>
+#include <QSettings>
 #include "camerapage.h"
 #include "pictureviewpage.h"
 
@@ -50,7 +51,7 @@ private slots:
   void cheese_stop_click();
 private:
   QHBoxLayout *btnLayout;
-
+  QSettings *set;
 
 };
 

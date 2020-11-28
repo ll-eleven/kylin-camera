@@ -19,7 +19,7 @@ TitleBar::TitleBar(QWidget *parent)
   funcListButton = new QPushButton;
   m_pFuncLabel = new QLabel(this);
   m_pMinimizeButton = new QPushButton(this);
-  m_pMaximizeButton = new QPushButton(this);
+  m_pMaximizeButton = new QPushButton;
   m_pCloseButton = new QPushButton(this);
 
   m_maxButtonPressed = 0;
@@ -38,7 +38,7 @@ TitleBar::TitleBar(QWidget *parent)
 
   icon = new QLabel;//图标
   icon->setPixmap(QPixmap::fromImage(QImage(":/image/Screenshot@2x.png")));
-  funcListButton->setIcon(QIcon(":/image/setting1.png"));
+  funcListButton->setIcon(QIcon(":/image/funclist.png"));
 //  m_pTopButton->setIcon(QIcon(":/image/top.png"));
   m_pMinimizeButton->setIcon(QIcon(":/image/min.png"));
   m_pCloseButton->setIcon(QIcon(":/image/close.png"));
@@ -52,7 +52,7 @@ TitleBar::TitleBar(QWidget *parent)
   m_pMaximizeButton->setObjectName("maximizeButton");
   m_pCloseButton->setObjectName("closeButton");
 
-  m_pFuncLabel->setText("麒麟摄像头");
+  m_pFuncLabel->setText(tr("kylin-camera"));
   m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;font-family:SourceHanSansCN-Regular;");
   QString btnStyle = /*"QPushButton{background-color:#FFFFFF}"*/
                      "QPushButton{border-radius:4px;}"
@@ -71,7 +71,7 @@ TitleBar::TitleBar(QWidget *parent)
   pLayout->addSpacing(10);
   pLayout->addWidget(funcListButton);
   pLayout->addWidget(m_pMinimizeButton);
-//  pLayout->addWidget(m_pMaximizeButton);
+  pLayout->addWidget(m_pMaximizeButton);
   pLayout->addWidget(m_pCloseButton);
   pLayout->setSpacing(0);
   pLayout->setContentsMargins(10, 0, 10, 0);
@@ -128,7 +128,6 @@ void TitleBar::onClicked()
         else if(pButton == m_pMaximizeButton){
 
               if(!m_maxButtonPressed){
-
                 pWindow->showMaximized();
                 }
               else{

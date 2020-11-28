@@ -32,5 +32,6 @@
         <file>image/setting2.png</file>
         <file>image/setting1.png</file>
         <file>image/zanting1.png</file>
+        <file>image/delete.svg</file>
     </qresource>
 </RCC>

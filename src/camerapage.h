@@ -10,36 +10,55 @@
 #include <QCamera>
 #include <QCameraInfo>
 #include <QPixmap>
+#include <QStackedLayout>
 #include <QMediaServiceCameraInfoInterface>
 #include <QMediaService>
 #include <QImage>
+#include <QMessageBox>
 #include <QLayout>
+#include <QTimer>
+#include <QTime>
 #include <QCameraCaptureBufferFormatControl>
 #include <QCameraImageCapture>
 #include <QStatusBar>
 #include <QMediaRecorder>
+#include <QTime>
 #include "button.h"
+#include "VideoDisplay.h"
+#include "kylincamera_global.h"
+#include "KylinCamera.h"
 
 class CameraPage : public QWidget
 {
   Q_OBJECT
 public:
-  explicit CameraPage();
+  explicit CameraPage(QWidget *parent = 0);
   QImage image;
 
   QPushButton *laytop;
   QPushButton *fullScreen;
   QPushButton *leftdown;
   QCameraInfo *camerainfo;
-  QCamera *camera;
+
+//  QCamera *camera;
   QCameraViewfinder *viewfinder;
   QMediaRecorder* mediaRecorder;
+
   QStatusBar *statusbar;  //录像时间
   QCameraImageCapture *imageCapture;
+
+
+  KylinCamera *camera;
+  VideoCapture *video;
+  VideoDisplay *videoDisplay;
+  
+  QLabel *dead_time;
+  QWidget *dead_widget;
+  bool has_device;
 public slots:
   void updateRecordTime();
-  void setImageCapture();
-  void setMediaRecorder();
+//  void setImageCapture();
+//  void setMediaRecorder();
   void record();
   void stop();
   void pause();

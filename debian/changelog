@@ -1,12 +1,126 @@
+kylin-camera (1.1.1kord) v101; urgency=medium
 
-kylin-camera (1.0.2kord) v101; urgency=medium
+  * 解决mips编译不通过的问题
+  * 解决拍照闪退问题
+  * 设定默认拍照路径
+  * 优化相册逻辑
+  * 优化拍照及摄像逻辑，提高扩展性和可维护性
+  * 核心功能兼容v10
 
-  * 优化界面逻辑，修改弹出相册bug 
+ -- liuyuhui <liuyuhui@kylinos.cn>  Thu, 26 Nov 2020 20:26:06 +0800
 
- -- liuyuhui <liuyuhui@kylinos.cn>  Thu, 5 Nov 2020 20:20:06 +0800
+kylin-camera (1.0.8kord5~rc27) v101; urgency=medium
 
-kylin-camera (1.0.1kord3) v101; urgency=medium
+  * 解决相册界面错乱的问题
+  * 解决翻译失效的问题
+  * 解决快捷方式及命令不能打开麒麟摄像头的问题
 
-  * 首次部署. 
+ -- liuyuhui <liuyuhui@kylinos.cn>  Mon, 23 Nov 2020 20:06:06 +0800
 
- -- liuyuhui <liuyuhui@kylinos.cn>  Wed, 4 Nov 2020 11:06:06 +0800
+kylin-camera (1.0.8kord4rc2) v101; urgency=medium
+
+  * 添加翻译文件
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 20 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.8kord4rc1) v101; urgency=medium
+
+  * 添加翻译文件
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 20 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.8kord4) v101; urgency=medium
+
+  * 添加翻译文件
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 20 Nov 2020 11:06:06 +0800
+kylin-camera (1.0.8kord3) v101; urgency=medium
+
+  * 修改链接库
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 20 Nov 2020 11:06:06 +0800
+kylin-camera (1.0.8kord2) v101; urgency=medium
+
+  * 修改链接库
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 20 Nov 2020 11:06:06 +0800
+kylin-camera (1.0.8kord1) v101; urgency=medium
+
+  * 修改链接库
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 20 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.8) v101; urgency=medium
+
+  * 修改arm链接库,完善录像功能
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 20 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.7kord1~rc2) v101; urgency=medium
+
+  * 修改arm链接库
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 13 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.7kord1~rc1) v101; urgency=medium
+
+  * x86版本测试修改内存泄漏bug
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 13 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.7kord) v101; urgency=medium
+
+  * x86版本测试
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 13 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.6kord1~rc4) v101; urgency=medium
+
+  * 修改链接库4
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 13 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.6kord1~rc3) v101; urgency=medium
+
+  * 修改链接库3
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 13 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.6kord1~rc2) v101; urgency=medium
+
+  * 修改链接库2
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 13 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.6kord1~rc1) v101; urgency=medium
+
+  * 修改链接库
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Fri, 13 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.5kord1~rc1) v101; urgency=medium
+
+  * 增加V10.1所需依赖
+
+kylin-camera (1.0.5kord) v101; urgency=medium
+
+  * 增加V10.1所需依赖
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Thu, 12 Nov 2020 11:06:06 +0800
+kylin-camera (1.0.4kord) v101; urgency=medium
+
+  * 完善录像功能调整布局
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Wed, 11 Nov 2020 11:06:06 +0800
+kylin-camera (1.0.3kord) v101; urgency=medium
+
+  * 调整界面布局 
+
+ -- 宋熙康 <songxikang@kylinos.cn>  Mon, 9 Nov 2020 11:06:06 +0800
+
+kylin-camera (1.0.1kord) v101; urgency=medium
+
+  * Initial release.
+  * Finish basic music playback function. 
+
+ -- songxikang <songxikang@kylinos.cn>  Wed, 4 Nov 2020 11:06:06 +0800
