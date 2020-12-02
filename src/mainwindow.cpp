@@ -378,6 +378,7 @@ void MainWindow::itemDoubleClicked(QListWidgetItem *item)
     {
         QString temp("xdg-open ");
         temp.append(fileName);
+//        startCommend(fileName);
         startCommend(temp);
         qDebug() << "cmd :  "<< temp;
     }
@@ -389,8 +390,10 @@ void MainWindow::startCommend(QString cmd)
 {
 //  system(cmd.toLatin1().data());
 //    cmd.append("\n");
-
-    proc->start(cmd);
+//  QStringList strL(cmd);
+//    proc->start("xdg-open", strL);
+    proc->startDetached(cmd);
+//    proc->start(cmd);
     /*proc->write(cmd.toLatin1().data());*/
     /*proc->waitForFinished(); */
 
