@@ -22,7 +22,7 @@
 #include <QCameraImageCapture>
 #include <QStatusBar>
 #include <QMediaRecorder>
-#include <QTime>
+#include <QTimer>
 #include "button.h"
 #include "VideoDisplay.h"
 #include "kylincamera_global.h"
@@ -54,6 +54,7 @@ public:
   
   QLabel *dead_time;
   QWidget *dead_widget;
+  QTimer *time;
   bool has_device;
 public slots:
   void updateRecordTime();
@@ -63,6 +64,7 @@ public slots:
   void stop();
   void pause();
   void displayCameraError();
+  void timeEvent();
 private:
 
   QLabel *lab;

@@ -80,12 +80,6 @@ Button::Button(QWidget *parent)
       cheese->hide();
       cheese_vedio->show();
     }
-//  this->setAttribute(Qt::WA_TranslucentBackground, false);
-//  voice->hide();
-//  this->setStyleSheet("background-color:#FFFFFF");
-//  capture->setFlat(true);
-//  this->setAttribute(Qt::WA_TranslucentBackground, true);
-
 
   QString btnStyle = "QPushButton{background-color:#3D6BE5}"
                      "QPushButton{border-radius:10px;}"

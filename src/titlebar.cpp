@@ -70,8 +70,11 @@ TitleBar::TitleBar(QWidget *parent)
   pLayout->addWidget(m_pFuncLabel);
   pLayout->addSpacing(10);
   pLayout->addWidget(funcListButton);
+  pLayout->setSpacing(4);
   pLayout->addWidget(m_pMinimizeButton);
+  pLayout->setSpacing(4);
   pLayout->addWidget(m_pMaximizeButton);
+  pLayout->setSpacing(4);
   pLayout->addWidget(m_pCloseButton);
   pLayout->setSpacing(0);
   pLayout->setContentsMargins(10, 0, 10, 0);

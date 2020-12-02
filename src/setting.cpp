@@ -1,7 +1,8 @@
 #include "setting.h"
 #include <QDebug>
 #include <QSettings>
-
+#include <QStandardPaths>
+#include <QMessageBox>
 Setting::Setting(QWidget *parent)
   : QWidget(parent)
 {
@@ -129,9 +130,15 @@ Setting::Setting(QWidget *parent)
 //void Setting::dir_change(){}
 void Setting::dir_click(){
   current_dir = QFileDialog::getExistingDirectory(nullptr,tr("Select the directory"),":/home",QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-  if(QDir(current_dir).exists() && current_dir != ""){
+  QString first = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+  if(QDir(current_dir).exists() && current_dir != "" && current_dir.contains(first,Qt::CaseSensitive)){
+    current_dir.append('/');
     current_dir_lab->setText(current_dir);
+    qDebug() << "current_dir"<< current_dir;
+    emit dir_change();
   }
-  qDebug() << "current_dir"<< current_dir;
-  emit dir_change();
+//  else{
+//      QMessageBox::question(this,tr("No effect"),tr("Can not set save path"),0);
+//    }
+
 }

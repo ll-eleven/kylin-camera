@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
   : QWidget(parent)
 {
 
+  proc = new QProcess();
+
   //从配置文件读取
   imagePath = setting->value("save_path").toString();
 
@@ -183,7 +185,7 @@ void MainWindow::clickPhoto()
         timer = new QTimer(this);
         connect(timer,&QTimer::timeout, this, &MainWindow::timeEvent);
         timer->start(1000);
-        dead_time_sec_tmp=0;
+        dead_time_sec_tmp = 0;
     }
 }
 QString MainWindow::creatName()
@@ -196,10 +198,10 @@ QString MainWindow::creatName()
 void MainWindow::takePhoto(QString name ,bool isvideo)
 {
     QString path;
-    path+=imagePath;
-    if(isvideo)path+=".";
-    path+=name;
-    path+=".jpg";
+    path += imagePath;
+    if(isvideo) path += ".";
+    path += name;
+    path += ".jpg";
 
     if(camerapage->has_device){
       camerapage->camera->camera_take_photo(path.toLocal8Bit().data());
@@ -251,8 +253,11 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
   int y = event->y();
   //在小窗口模式下，点击是否在设置区域内
   int in_setting = x > 437 && x < 696 && y > 42 && y < 244;
-
-  if(event->button() == Qt::LeftButton && pTitleBar->m_setButtonPressed && !in_setting ){
+  QPushButton *pButton = qobject_cast<QPushButton *>(sender());
+  qDebug() << pButton;
+  if(event->button() == Qt::LeftButton && pTitleBar->m_setButtonPressed && !in_setting ||
+        pButton == pTitleBar->m_pMaximizeButton)
+  {
     setWid->hide();
     pTitleBar->m_setButtonPressed = true;
   }
@@ -322,6 +327,7 @@ void MainWindow::imageDisplay(QString filename)
     QListWidgetItem *imageItem = new QListWidgetItem;
     imageItem->setIcon(QIcon(fitPixmap));
     imageItem->setStatusTip(trueName(filename));
+    qDebug()<<"==="<<trueName(filename);
 
     viewpage->listWidget->addItem(imageItem);
     delete pixmap;
@@ -366,24 +372,29 @@ void MainWindow::itemDoubleClicked(QListWidgetItem *item)
 {
     //点击打开图片
     QString fileName=item->statusTip();
+    qDebug()<< "fileName =" << fileName;
     QFileInfo dir(fileName);
     if(dir.exists())
     {
         QString temp("xdg-open ");
         temp.append(fileName);
         startCommend(temp);
+        qDebug() << "cmd :  "<< temp;
     }
+
 }
+
+
 void MainWindow::startCommend(QString cmd)
 {
-    cmd.append("\n");
-    QProcess proc;
-    proc.start("bash");
-    proc.waitForStarted();
-    proc.write(cmd.toLatin1().data());
-    proc.waitForFinished(1);
-    proc.kill();
-    proc.close();
+//  system(cmd.toLatin1().data());
+//    cmd.append("\n");
+
+    proc->start(cmd);
+    /*proc->write(cmd.toLatin1().data());*/
+    /*proc->waitForFinished(); */
+
+
 }
 void MainWindow::itemclicked(QListWidgetItem* item){
   index = viewpage->listWidget->row(item);
@@ -394,7 +405,7 @@ void MainWindow::delete_picture()
 {
     if(index == viewpage->listWidget->count())
         index--;
-    if(index==-1)return;
+    if(index == -1) return;
     //删除本地图片
     QString temp("rm -rf ");
     temp.append(trueName(viewpage->listWidget->item(index)->statusTip()));
@@ -407,7 +418,7 @@ void MainWindow::delete_picture()
 void MainWindow::save_dir_change(){
   imagePath = setWid->current_dir;
   setting->setValue("save_path",imagePath);
-  imagePath.append("/");
+//  imagePath.append("/");
   qDebug() << "save dir change" << imagePath;
 }
 
@@ -418,7 +429,7 @@ void MainWindow::timeEvent()
     if(dead_time_sec_tmp >= dead_time_sec)
     {
         timer->stop();
-        dead_time_sec_tmp=0;
+        dead_time_sec_tmp = 0;
         camerapage->dead_time->hide();
         QString name=creatName();
         takePhoto(name,false);

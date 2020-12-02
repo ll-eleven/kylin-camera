@@ -110,10 +110,12 @@ private:
   QTimer *timer;
   //倒计时
   QWidget *dead_time;
+
+  QProcess *proc;
   void mousePressEvent(QMouseEvent *event);
   int index = -1;
   int timerId;
   int dead_time_sec;
-  int dead_time_sec_tmp=0;
+  int dead_time_sec_tmp = 0;
 };
 #endif // MAINWINDOW_H
