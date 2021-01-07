@@ -23,6 +23,13 @@ public:
   bool m_leftButtonPressed;       // 鼠标左键按下标记
   bool m_maxButtonPressed;        // 最大化按钮按下
   bool m_setButtonPressed;
+  QLabel *icon;
+  QPushButton *m_pMinimizeButton; // 最小化按钮
+  QPushButton *m_pMaximizeButton; //
+  QPushButton *m_pCloseButton;    // 关闭按钮
+  QPoint m_start;                 // 起始点
+  QPoint m_end;                   // 结束点
+
   // 设置模式或功能名称
 //  void setFuncLabel(QString label);
 
@@ -36,6 +43,7 @@ protected:
 signals:
     void iconButtonSignal();
     void MaxBtn_change();
+    void close();
 private slots:
 
     // 进行置顶、最小化、关闭操作
@@ -51,12 +59,6 @@ private:
 
 private:
 
-    QLabel *icon;
-    QPushButton *m_pMinimizeButton; // 最小化按钮
-    QPushButton *m_pMaximizeButton;
-    QPushButton *m_pCloseButton;    // 关闭按钮
-    QPoint m_start;                 // 起始点
-    QPoint m_end;                   // 结束点
 
 };
 

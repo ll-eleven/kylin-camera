@@ -33,5 +33,19 @@
         <file>image/setting1.png</file>
         <file>image/zanting1.png</file>
         <file>image/delete.svg</file>
+        <file>image/camera-disconnected.png</file>
+        <file>image/camera-disconnected2.png</file>
+        <file>image/luxiang-zhihui.png</file>
+        <file>image/luxiang-zhihui2.png</file>
+        <file>image/paizhao-zhihui.png</file>
+        <file>image/paizhao-zhihui@2x.png</file>
+        <file>image/video-x-generic-symbolic.svg</file>
+        <file>image/media-record-symbolic.png</file>
+        <file>image/media-playback-start.png</file>
+        <file>image/media-playback-start-symbolic.png</file>
+        <file>image/camera-app.png</file>
+        <file>image/camera-app@2x.png</file>
+        <file>image/document-open-symbolic.png</file>
+        <file>image/document-open-symbolic@2x.png</file>
     </qresource>
 </RCC>

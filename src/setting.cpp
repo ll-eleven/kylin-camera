@@ -1,137 +1,138 @@
 #include "setting.h"
 #include <QDebug>
 #include <QSettings>
+#include <QStandardPaths>
+#include <QMessageBox>
+#include <QErrorMessage>
+#include "unistd.h"
+
 
 Setting::Setting(QWidget *parent)
   : QWidget(parent)
 {
 //    this->setWindowFlags(Qt::FramelessWindowHint);
+    init_ui();
+//    this->setStyleSheet("QWidget{border-radius:6px;background-color:#123000;}");
+}
+
+void Setting::init_ui(){
     this->setAttribute(Qt::WA_StyledBackground);
-    dirlab = new QLabel;
+
     mirrorlab = new QLabel;
     delaylab = new QLabel;
-    scalelab = new QLabel;
-    cameraDevicelab = new QLabel;
-    vedioDevicelab = new QLabel;
+    setlab = new QLabel;
+    themelab = new QLabel;
+    helplab = new QLabel;
+    aboutlab = new QLabel;
 
-    cameraDevice = new QPushButton(this);
-    vedioDevice = new QPushButton(this);
-    dir = new QPushButton(this);
-    scale = new QPushButton(this);
-
-    delaybtn = new SwitchButton(this);
-    mirrorbtn = new SwitchButton(this);
+    delay = new QWidget;
+    mirror = new QWidget;
+    set = new QPushButton;
+    theme = new QPushButton;
+    help = new QPushButton;
+    about = new QPushButton;
+    mirrorbtn = new SwitchButton;
+    delaybtn = new SwitchButton;
 
     vlayout = new QVBoxLayout;
     delayLayout = new QHBoxLayout;
     mirrorLayout = new QHBoxLayout;
-    dirLayout = new QHBoxLayout;
-    scaleLayout = new QHBoxLayout;
-    cameraDeviceLayout = new QHBoxLayout;
-    vedioDeviceLayout = new QHBoxLayout;
+    settingLayout = new QHBoxLayout;
+    themeLayout = new QHBoxLayout;
+    helpLayout = new QHBoxLayout;
+    aboutLayout = new QHBoxLayout;
 
-//    current_dir = new QString;
-    current_dir_lab = new QLabel;
     delaybtn->setFixedWidth(40);
     mirrorbtn->setFixedWidth(40);
-//    current_dir_lab->setText(":/home");
-    current_dir_lab->setStyleSheet(
-          "font-size: 12px;"
-          "font-family: Noto Sans CJK SC;"
-          "font-weight: 400;"
-          "line-height: 14px;"
-          "color: rgba(255, 255, 255, 0.5);"
-          "opacity: 1;"
-          );
-//    current_dir_lab->setSizePolicy();
+    delay->setFixedHeight(40);
+    mirror->setFixedHeight(40);
+    set->setFixedHeight(40);
+    about->setFixedHeight(40);
+    theme->setFixedHeight(40);
+    help->setFixedHeight(40);
+
     delaylab->setText(tr("Delayed shooting"));
     mirrorlab->setText(tr("Image mirroring"));
-    dirlab->setText(tr("The image path"));
-    scalelab->setText(tr("The image scale"));
-    cameraDevicelab->setText(tr("Camera device"));
-    vedioDevicelab->setText(tr("Sound device"));
+    setlab->setText(tr("setting"));
+    themelab->setText(tr("theme"));
+    helplab->setText(tr("help"));
+    aboutlab->setText(tr("about"));
     QString btnStyle = \
-        "width: 204px;"
-        "height: 30px;"
-        "background: #27282A;"
         "opacity: 1;"
-        "border-radius: 4px;"
-    ;
+        "border-radius: 4px;";
+            "background-color:#000000";
 
     QString labStyle = \
-        "font-size: 14px;"
-        "font-family: Noto Sans CJK SC;"
-        "font-weight: 400;"
-        "line-height: 32px;"
-        "color: #FFFFFF;"
-        "opacity: 1;";
-    dirlab->setStyleSheet(labStyle);
+            "width: 56px;"
+            "height: 20px;"
+            "font-size: 14px;"
+            "font-family: PingFangSC-Regular;"
+            "line-height: 24px;"
+//            "color: #FFFFFF;"
+            "opacity: 0.91;";
+
+
     mirrorlab->setStyleSheet(labStyle);
     delaylab->setStyleSheet(labStyle);
-    scalelab->setStyleSheet(labStyle);
-    cameraDevicelab->setStyleSheet(labStyle);
-    vedioDevicelab->setStyleSheet(labStyle);
+    setlab->setStyleSheet(labStyle);
+    themelab->setStyleSheet(labStyle);
+    helplab->setStyleSheet(labStyle);
+    aboutlab->setStyleSheet(labStyle);
 
-    dir->setStyleSheet(btnStyle);
-    cameraDevice->setStyleSheet(btnStyle);
-    vedioDevice->setStyleSheet(btnStyle);
-    scale->setStyleSheet(btnStyle);
+    set->setStyleSheet(btnStyle);
+    theme->setStyleSheet(btnStyle);
+    help->setStyleSheet(btnStyle);
+
+
+
     //设置按钮布局
-    scaleLayout->addSpacing(8);
-    scaleLayout->addWidget(scalelab);
-    scaleLayout->setMargin(0);
-    scale->setLayout(scaleLayout);
-
-    vedioDeviceLayout->addSpacing(8);
-    vedioDeviceLayout->addWidget(vedioDevicelab);
-    vedioDeviceLayout->setMargin(0);
-    vedioDevice->setLayout(vedioDeviceLayout);
-
-    dirLayout->addSpacing(8);
-    dirLayout->addWidget(dirlab);
-    dirLayout->setMargin(0);
-    dirLayout->addWidget(current_dir_lab);
-    dir->setLayout(dirLayout);
-
-    cameraDeviceLayout->addSpacing(8);
-    cameraDeviceLayout->addWidget(cameraDevicelab);
-    cameraDeviceLayout->setMargin(0);
-    cameraDevice->setLayout(cameraDeviceLayout);
-
-//    vedioDeviceLayout->addSpacing(8);
-    vedioDeviceLayout->addWidget(vedioDevicelab);
-    vedioDeviceLayout->setMargin(0);
-    vedioDevice->setLayout(vedioDeviceLayout);
-
     delayLayout->addSpacing(8);
     delayLayout->addWidget(delaylab);
-    delayLayout->addSpacing(0);
+    delayLayout->addStretch(10);
     delayLayout->addWidget(delaybtn);
 
     mirrorLayout->addSpacing(8);
     mirrorLayout->addWidget(mirrorlab);
-    mirrorLayout->addSpacing(0);
+    mirrorLayout->addStretch(99);
     mirrorLayout->addWidget(mirrorbtn);
 
+    settingLayout->addSpacing(16);
+    settingLayout->addWidget(setlab);
+    settingLayout->addStretch(99);
+    settingLayout->setMargin(0);
 
-    vlayout->addLayout(delayLayout);
-    vlayout->addLayout(mirrorLayout);
-    vlayout->addWidget(dir);
-    vlayout->addWidget(scale);
-    vlayout->addWidget(cameraDevice);
-    vlayout->addWidget(vedioDevice);
+    themeLayout->addSpacing(16);
+    themeLayout->addWidget(themelab);
+    themeLayout->addStretch(99);
+    themeLayout->setMargin(0);
+
+    helpLayout->addSpacing(16);
+    helpLayout->addWidget(helplab);
+    helpLayout->addStretch(99);
+    helpLayout->setContentsMargins(0,0,0,0);
+
+    aboutLayout->addSpacing(16);
+    aboutLayout->addWidget(aboutlab);
+    aboutLayout->addStretch(99);
+    aboutLayout->setMargin(0);
+//    setLayout->addSpacing(8);
+//    setLayout->set();
+
+    delay->setLayout(delayLayout);
+    mirror->setLayout(mirrorLayout);
+    set->setLayout(settingLayout);
+    theme->setLayout(themeLayout);
+    help->setLayout(helpLayout);
+    about->setLayout(aboutLayout);
+
+    vlayout->addWidget(delay);
+//    vlayout->addWidget(mirror);
+    vlayout->addWidget(set);
+    vlayout->addWidget(theme);
+    vlayout->addWidget(help);
+    vlayout->addWidget(about);
+    vlayout->setMargin(0);
     this->setLayout(vlayout);
-//  lineedit->setClearButtonEnabled(setClearButtonEnabled(true);
-
-    connect(dir,&QPushButton::clicked,this,&Setting::dir_click);
 
 }
-//void Setting::dir_change(){}
-void Setting::dir_click(){
-  current_dir = QFileDialog::getExistingDirectory(nullptr,tr("Select the directory"),":/home",QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-  if(QDir(current_dir).exists() && current_dir != ""){
-    current_dir_lab->setText(current_dir);
-  }
-  qDebug() << "current_dir"<< current_dir;
-  emit dir_change();
-}
+

@@ -11,50 +11,53 @@
 #include <QAction>
 #include <QFileDialog>
 #include <QSettings>
+#include <QComboBox>
+#include <QString>
+#include <QMap>
+#include <QProcess>
+#include "camerapage.h"
 #include "switchbutton.h"
 
 class Setting: public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  Setting(QWidget *parent = 0);
-//  ~Setting();
-  QLabel *dirlab;
-  QLabel *mirrorlab;
-  QLabel *delaylab;
-  QLabel *scalelab;
-  QLabel *cameraDevicelab;
-  QLabel *vedioDevicelab;
-  QPushButton *dir;
-  QPushButton *scale;
-  QPushButton *cameraDevice;
-  QPushButton *vedioDevice;
-  SwitchButton *delaybtn;
-  SwitchButton *mirrorbtn;
-  QVBoxLayout *vlayout;
+    Setting(QWidget *parent = 0);
+    //  ~Setting();
+    QWidget *delay;
+    QWidget *mirror;
 
-  QHBoxLayout *delayLayout;
-  QHBoxLayout *mirrorLayout;
-  QHBoxLayout *dirLayout;
-  QHBoxLayout *scaleLayout;
-  QHBoxLayout *cameraDeviceLayout;
-  QHBoxLayout *vedioDeviceLayout;
+    QLabel *mirrorlab;
+    QLabel *delaylab;
+    QLabel *setlab;
+    QLabel *themelab;
+    QLabel *helplab;
+    QLabel *aboutlab;
 
-  //当前路径
-  QString current_dir;
-  QLabel *current_dir_lab;
+    QPushButton *set;
+    QPushButton *theme;
+    QPushButton *help;
+    QPushButton *about;
+    SwitchButton *delaybtn;
+    SwitchButton *mirrorbtn;
 
+    QHBoxLayout *delayLayout;
+    QHBoxLayout *mirrorLayout;
+    QHBoxLayout *settingLayout;
+    QHBoxLayout *themeLayout;
+    QHBoxLayout *helpLayout;
+    QHBoxLayout *aboutLayout;
+    QVBoxLayout *vlayout;
+
+    //当前路径
+    void init_ui();
 signals:
-  void dir_change();
-//  void scale_change();
+
 public slots:
-  void dir_click();
-//  void scale_click();
-//  void cameraDevice_click();
-//  void vedioDevice_click();
-//  void delay_click();
-//  void mirror_click();
+
+private:
+
 };
 
 #endif // SETTING_H

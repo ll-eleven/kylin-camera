@@ -3,6 +3,9 @@ Section: utils
 Priority: optional
 Maintainer: songxikang <songxikang@kylinos.cn>
 Build-Depends: debhelper,
+			libkf5windowsystem-dev,
+			libqt5x11extras5-dev,
+			libfaac0,
 			kylincameralibs,
 			libx264-dev,
 			libgpac-dev,
@@ -11,7 +14,7 @@ Build-Depends: debhelper,
             qtchooser,
             qtscript5-dev,
             qttools5-dev-tools,
-            qtbase5-dev-tools,
+            qtbase5-dev-tools,			          
             qtmultimedia5-dev
 Standards-Version: 4.4.1
 Homepage: https://github.com/ubuntukylin/kylin-camera
