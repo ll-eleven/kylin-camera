@@ -17,7 +17,7 @@ PictureViewPage::PictureViewPage(QWidget *parent)
     title = new QWidget;
     btnpage = new QWidget;
     text->setText(tr("Album"));
-    text->setStyleSheet("QWidget{color:#A6A6A6};font-size:16px;font-family:SourceHanSansCN-Regular;");
+    text->setStyleSheet("font-size:16px;font-family:SourceHanSansCN-Regular;");
     deleteBtn->setIcon(QIcon(":/image/delete.svg"));
     deleteBtn->setFlat(true);
     hlayout->setMargin(0);
@@ -27,9 +27,9 @@ PictureViewPage::PictureViewPage(QWidget *parent)
     btnlayout->addSpacing(5000);
     btnlayout->addWidget(deleteBtn);
     btnpage->setLayout(btnlayout);
-    btnpage->setFixedHeight(42);
+    btnpage->setFixedHeight(40);
     title->setLayout(hlayout);
-    title->setFixedHeight(32);
+    title->setFixedHeight(30);
     deleteBtn->setFlat(true);
 
     vlayout->addWidget(title);
@@ -37,7 +37,6 @@ PictureViewPage::PictureViewPage(QWidget *parent)
     vlayout->addWidget(btnpage);
     vlayout->setMargin(0);
     this->setLayout(vlayout);
-
 
     initListWidget();
 //    initListView();
@@ -59,6 +58,7 @@ void PictureViewPage::initListWidget()
     imageLabel = new QLabel;
     imageLabel->setWindowTitle("TITLE");
 }
+
 
 void PictureViewPage::initListView(){
     listview->setIconSize(QSize(120,90));

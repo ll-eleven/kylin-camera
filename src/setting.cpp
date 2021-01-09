@@ -4,35 +4,41 @@
 #include <QStandardPaths>
 #include <QMessageBox>
 #include <QErrorMessage>
+#include <QApplication>
 #include "unistd.h"
+
 
 
 Setting::Setting(QWidget *parent)
   : QWidget(parent)
 {
-//    this->setWindowFlags(Qt::FramelessWindowHint);
+
     init_ui();
-//    this->setStyleSheet("QWidget{border-radius:6px;background-color:#123000;}");
+
+//    connect(help,&QPushButton::clicked,this,&Setting::initHelp);
 }
 
 void Setting::init_ui(){
     this->setAttribute(Qt::WA_StyledBackground);
-
+//    this->setAttribute(Qt::WA_TranslucentBackground, false);//窗体透明
     mirrorlab = new QLabel;
     delaylab = new QLabel;
     setlab = new QLabel;
     themelab = new QLabel;
     helplab = new QLabel;
     aboutlab = new QLabel;
+    quitlab = new QLabel;
 
     delay = new QWidget;
     mirror = new QWidget;
     set = new QPushButton;
     theme = new QPushButton;
     help = new QPushButton;
-    about = new QPushButton;
+    about = new QPushButton(this);
     mirrorbtn = new SwitchButton;
     delaybtn = new SwitchButton;
+    quit = new QPushButton;
+    themeMenu = new QMenu;
 
     vlayout = new QVBoxLayout;
     delayLayout = new QHBoxLayout;
@@ -41,6 +47,7 @@ void Setting::init_ui(){
     themeLayout = new QHBoxLayout;
     helpLayout = new QHBoxLayout;
     aboutLayout = new QHBoxLayout;
+    quitLayout = new QHBoxLayout;
 
     delaybtn->setFixedWidth(40);
     mirrorbtn->setFixedWidth(40);
@@ -49,6 +56,7 @@ void Setting::init_ui(){
     set->setFixedHeight(40);
     about->setFixedHeight(40);
     theme->setFixedHeight(40);
+    quit->setFixedHeight(40);
     help->setFixedHeight(40);
 
     delaylab->setText(tr("Delayed shooting"));
@@ -57,18 +65,18 @@ void Setting::init_ui(){
     themelab->setText(tr("theme"));
     helplab->setText(tr("help"));
     aboutlab->setText(tr("about"));
+    quitlab->setText(tr("quit"));
     QString btnStyle = \
         "opacity: 1;"
         "border-radius: 4px;";
-            "background-color:#000000";
 
     QString labStyle = \
             "width: 56px;"
             "height: 20px;"
             "font-size: 14px;"
+            "color: #FFFFFF;"
             "font-family: PingFangSC-Regular;"
             "line-height: 24px;"
-//            "color: #FFFFFF;"
             "opacity: 0.91;";
 
 
@@ -78,11 +86,12 @@ void Setting::init_ui(){
     themelab->setStyleSheet(labStyle);
     helplab->setStyleSheet(labStyle);
     aboutlab->setStyleSheet(labStyle);
+    quitlab->setStyleSheet(labStyle);
 
     set->setStyleSheet(btnStyle);
     theme->setStyleSheet(btnStyle);
     help->setStyleSheet(btnStyle);
-
+    quit->setStyleSheet(btnStyle);
 
 
     //设置按钮布局
@@ -115,6 +124,11 @@ void Setting::init_ui(){
     aboutLayout->addWidget(aboutlab);
     aboutLayout->addStretch(99);
     aboutLayout->setMargin(0);
+
+    quitLayout->addSpacing(16);
+    quitLayout->addWidget(quitlab);
+    quitLayout->addStretch(99);
+    quitLayout->setMargin(0);
 //    setLayout->addSpacing(8);
 //    setLayout->set();
 
@@ -124,6 +138,7 @@ void Setting::init_ui(){
     theme->setLayout(themeLayout);
     help->setLayout(helpLayout);
     about->setLayout(aboutLayout);
+    quit->setLayout(quitLayout);
 
     vlayout->addWidget(delay);
 //    vlayout->addWidget(mirror);
@@ -131,8 +146,19 @@ void Setting::init_ui(){
     vlayout->addWidget(theme);
     vlayout->addWidget(help);
     vlayout->addWidget(about);
+    vlayout->addWidget(quit);
     vlayout->setMargin(0);
     this->setLayout(vlayout);
 
+
+    QAction *dark = new QAction;
+    QAction *light = new QAction;
+    QAction *follow = new QAction;
+    theme->addAction(dark);
+    theme->addAction(light);
+    theme->addAction(follow);
+
+
 }
+
 

@@ -38,12 +38,32 @@ TitleBar::TitleBar(QWidget *parent)
 
     icon = new QLabel;//图标
     icon->setPixmap(QPixmap::fromImage(QImage(":/image/camera-app@2x.png")));
-    funcListButton->setIcon(QIcon(":/image/funclist.png"));
-    //  m_pTopButton->setIcon(QIcon(":/image/top.png"));
-    m_pMinimizeButton->setIcon(QIcon(":/image/min.png"));
-    m_pCloseButton->setIcon(QIcon(":/image/close.png"));
-    m_pMaximizeButton->setIcon(QIcon(":/image/max.png"));
-    m_pMinimizeButton->setIconSize(QSize(25, 25));
+
+    funcListButton->setIcon(QIcon::fromTheme("application-menu"));
+    m_pMinimizeButton->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
+    m_pCloseButton->setIcon(QIcon::fromTheme("window-close"));
+//    m_pCloseButton->setProperty("isWindowButton",0x2);
+//    m_pCloseButton->setProperty("useIconHighlightEffect",0x8);
+//    m_pCloseButton->setAutoRaise(true);
+//    m_pMaximizeButton->setIcon(QIcon(":/image/max.png"));
+    m_pMaximizeButton->setIcon(QIcon::fromTheme("window-maximize-symbolic"));
+
+//    funcListButton->setAcceptDrops();
+    funcListButton->setProperty("isWindowButton", 0x1);
+    funcListButton->setProperty("useIconHighlightEffect", 0x2);
+    funcListButton->setFlat(true);
+
+    m_pMinimizeButton->setProperty("isWindowButton", 0x1);
+    m_pMinimizeButton->setProperty("useIconHighlightEffect", 0x2);
+    m_pMinimizeButton->setFlat(true);
+
+    m_pCloseButton->setProperty("isWindowButton", 0x2);
+    m_pCloseButton->setProperty("useIconHighlightEffect", 0x8);
+    m_pCloseButton->setFlat(true);
+
+    m_pMaximizeButton->setProperty("isWindowButton", 0x1);
+    m_pMaximizeButton->setProperty("useIconHighlightEffect", 0x2);
+    m_pMaximizeButton->setFlat(true);
 
     // 设置对象名
     m_pFuncLabel->setObjectName("whiteLabel");
@@ -53,15 +73,15 @@ TitleBar::TitleBar(QWidget *parent)
     m_pCloseButton->setObjectName("closeButton");
 
     m_pFuncLabel->setText(tr("kylin-camera"));
-    m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;font-family:SourceHanSansCN-Regular;");
-    QString btnStyle = /*"QPushButton{background-color:#000000;}"*/
-                     "QPushButton{border-radius:4px;}"
-                     "QPushButton:hover{background-color:rgba(255,255,255,0.1);}"
-                     "QPushButton:pressed{background-color:rgba(255,255,255,0.15);}";
-    funcListButton->setStyleSheet(btnStyle);
-    m_pMinimizeButton->setStyleSheet(btnStyle);
-    m_pMaximizeButton->setStyleSheet(btnStyle);
-    m_pCloseButton->setStyleSheet("QPushButton{border-radius:4px;background-color:#000000;}QPushButton:hover{background-color:#F86457;}");
+//    m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;font-family:SourceHanSansCN-Regular;");
+//    QString btnStyle = \
+//                     "QPushButton{border-radius:4px;}"
+//                     "QPushButton:hover{background-color:rgba(255,255,255,0.1);}"
+//                     "QPushButton:pressed{background-color:rgba(255,255,255,0.15);}";
+//    funcListButton->setStyleSheet(btnStyle);
+//    m_pMinimizeButton->setStyleSheet(btnStyle);
+//    m_pMaximizeButton->setStyleSheet(btnStyle);
+//    m_pCloseButton->setStyleSheet("QPushButton{border-radius:4px;}QPushButton:hover{background-color:#F86457;}");
 
     // 设置按钮布局
     QHBoxLayout *pLayout = new QHBoxLayout(this);
@@ -110,7 +130,7 @@ TitleBar::~TitleBar()
 //}
 
 
-
+//按钮功能设置，和槽链接
 void TitleBar::onClicked()
 {
     QPushButton *pButton = qobject_cast<QPushButton *>(sender());

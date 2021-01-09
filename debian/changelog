@@ -1,4 +1,11 @@
-kylin-camera (1.1.2kord8~rc1) v100; urgency=medium
+kylin-camera (1.1.2kord9~rc3) v101; urgency=medium
+
+  * 解决了窗口跳跃问题
+  * 修改设置界面 
+
+ -- songxikang <songxikang@kylinos.cn>  Fri, 4 Dec 2020 20:26:06 +0800
+
+kylin-camera (1.1.2kord8) v101; urgency=medium
 
   * 修改了界面显示的问题，和删除异常问题
   * 修改设置界面 

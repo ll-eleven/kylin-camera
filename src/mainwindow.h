@@ -34,6 +34,7 @@
 #include <QPixmap>
 #include "albumread.h"
 #include "settingpage.h"
+#include "aboutwidget.h"
 #include <QProcess>
 class MainWindow : public QWidget
 {
@@ -90,6 +91,10 @@ private slots:
     void settingPageShow();
     void updateRecordTime();
     void imageView(QString);
+    void quit();
+    void initAbout();
+    void initHelp();
+    void thememenu();
 protected:
     virtual void mousePressEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
@@ -118,10 +123,10 @@ private:
     PictureViewPage *viewpage;
     SettingPage *setPage;
 
-    //保存路径
-    QString imagePath;
-    QMenu *menu;
 
+    QString imagePath; //保存路径
+
+    AboutWidget *aboutWinWidget;
 
     //监听设备文件
     QFileSystemWatcher *watcher;

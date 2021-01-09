@@ -6,7 +6,6 @@ bool Button::voice_mode = false;
 Button::Button(QWidget *parent)
   : QWidget(parent)
 {
-    set = new QSettings;
     btnLayout = new QHBoxLayout;
 
     capture = new QPushButton ;
@@ -107,6 +106,14 @@ Button::Button(QWidget *parent)
     stop->setIcon(QIcon(":/image/zanting1.png"));
     restore->setIcon(QIcon(":/image/media-playback-start-symbolic.png"));
 
+    capture->setProperty("isWindowButton", 0x1);
+    capture->setProperty("useIconHighlightEffect", 0x2);
+    capture->setFlat(true);
+
+    vedio->setProperty("isWindowButton", 0x1);
+    vedio->setProperty("useIconHighlightEffect", 0x2);
+    vedio->setFlat(true);
+
 
 //  capture->setStyleSheet(btnStyle);
 //  cheese->setStyleSheet(btnStyle);
@@ -136,7 +143,7 @@ Button::Button(QWidget *parent)
     picture->setFlat(true);
     picture->setAutoFillBackground(0);
 
-    this->setAttribute(Qt::WA_Hover, true);
+//    this->setAttribute(Qt::WA_Hover, true);
 //  this->show();
 
     connect(capture,&QPushButton::clicked,this,&Button::capture_click);

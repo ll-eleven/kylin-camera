@@ -19,11 +19,11 @@
 int main(int argc, char *argv[])
 {
     //互斥锁，防止打开多个程序
-    int fd = open(TRANS_PATH,O_RDONLY);
-    flock(fd,LOCK_UN);
-    if(fd == -1) return -1;
-    int ret = flock(fd,LOCK_EX | LOCK_NB);
-    if(ret == -1) return -1;
+//    int fd = open(TRANS_PATH,O_RDONLY);
+//    flock(fd,LOCK_UN);
+//    if(fd == -1) return -1;
+//    int ret = flock(fd,LOCK_EX | LOCK_NB);
+//    if(ret == -1) return -1;
 
     //设配4k屏
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))

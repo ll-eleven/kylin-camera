@@ -14,10 +14,13 @@
 #include <QComboBox>
 #include <QString>
 #include <QMap>
+#include <QSettings>
+#include <QMenu>
 #include <QProcess>
 #include "camerapage.h"
 #include "switchbutton.h"
 
+#include "daemonipcdbus.h"
 class Setting: public QWidget
 {
     Q_OBJECT
@@ -34,6 +37,7 @@ public:
     QLabel *themelab;
     QLabel *helplab;
     QLabel *aboutlab;
+    QLabel *quitlab;
 
     QPushButton *set;
     QPushButton *theme;
@@ -41,6 +45,8 @@ public:
     QPushButton *about;
     SwitchButton *delaybtn;
     SwitchButton *mirrorbtn;
+    QPushButton *quit;
+    QMenu *themeMenu; //设置主题菜单
 
     QHBoxLayout *delayLayout;
     QHBoxLayout *mirrorLayout;
@@ -48,16 +54,19 @@ public:
     QHBoxLayout *themeLayout;
     QHBoxLayout *helpLayout;
     QHBoxLayout *aboutLayout;
+    QHBoxLayout *quitLayout;
     QVBoxLayout *vlayout;
 
-    //当前路径
+    DaemonIpcDbus *m_pDaemonIpcDbus;
+
+
     void init_ui();
 signals:
 
 public slots:
 
 private:
-
+    void initAboutText();
 };
 
 #endif // SETTING_H

@@ -7,7 +7,25 @@
 #include <QThread>
 #include <QPoint>
 #include <QTime>
+#include "aboutwidget.h"
 #include <QDesktopWidget>
+
+#define TABWINDOWWIDETH 80                   //窗口宽度
+#define TABWINDOWHEIGHT 84                   //窗口高度
+#define TABTITLEHEIGHT 42                    //标题栏高度
+#define TABSHADOWWIDTH 6                     //阴影宽度
+#define TABWIDGETRADIUS 6                    //窗口圆角
+#define TABBUTTONRADIUS 6                    //按钮圆角
+#define TABSHADOWALPHA 0.08                  //阴影透明度
+
+#define ABOUTWINDOWWIDETH  420                 //窗口宽度
+#define ABOUTWINDOWHEIGHT  316                 //窗口高度
+#define ABOUTTITLEHEIGHT 42                    //标题栏高度
+#define ABOUTSHADOWWIDTH 6                     //阴影宽度
+#define ABOUTWIDGETRADIUS 6                    //窗口圆角
+#define ABOUTBUTTONRADIUS 6                    //按钮圆角
+#define ABOUTSHADOWALPHA 0.08                  //阴影透明度
+
 //相册宽度
 #define picture_width 270
 int MainWindow::picture_number;
@@ -25,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     if(imagePath == "")
     {
-        imagePath=QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+        imagePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
         QString locale = QLocale::system().name();
         if (locale == "zh_CN")
         {
@@ -80,7 +98,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 //    connect(QGSettings::changed("theme-ukui")
-    this->setStyleSheet("MainWindow{background-color:#000000;}");
+//#ifdef __V10__
+//    this->setStyleSheet("MainWindow{background-color:#000000;}");
+//#endif
     this->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 
 }
@@ -115,7 +135,11 @@ void MainWindow ::setCommonUI(){
 
     setWid->hide();
     setPage->current_dir_lab->setText(imagePath);
+
     setPage->raise();
+
+    StyleWidgetAttribute aboutWin(ABOUTWINDOWWIDETH,ABOUTWINDOWHEIGHT,0,ABOUTWIDGETRADIUS,ABOUTSHADOWWIDTH,ABOUTSHADOWALPHA,ABOUTTITLEHEIGHT);
+    aboutWinWidget = new AboutWidget(aboutWin,tr("kylin-camera"));
 
     viewpage->setFixedWidth(picture_width);
     viewpage->hide();
@@ -182,7 +206,11 @@ void MainWindow ::setCommonUI(){
     connect(setPage,&SettingPage::change_dev,camerapage,&CameraPage::change_device);
     connect(setWid->set,&QPushButton::clicked,this,&MainWindow::settingPageShow);
 //    connect(setWid->mirrorbtn,&SwitchButton::toggled,this,&MainWindow::mirror);
+    connect(setWid->quit,&QPushButton::clicked,this,&MainWindow::quit);
     connect(camerapage->laytop,&QPushButton::clicked,this,&MainWindow::stayTop);
+    connect(setWid->about,&QPushButton::clicked,this,&MainWindow::initAbout);
+    connect(setWid->help,&QPushButton::clicked,this,&MainWindow::initHelp);
+    connect(setWid->theme,&QPushButton::clicked,this,&MainWindow::thememenu);
 }
 
 
@@ -384,8 +412,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 //    if(pTitleBar->m_leftButtonPressed) {
         //将父窗体移动到父窗体原来的位置加上鼠标移动的位置：event->globalPos()-m_start
         //将鼠标在屏幕中的位置替换为新的位置
-
-        this->move(event->globalPos() + this->geometry().topLeft() - m_start);
+//        this->move(event->globalPos() + this->geometry().topLeft() - m_start);
         m_start = event->globalPos();
 //    }
 }
@@ -406,7 +433,8 @@ void MainWindow::funcListHandle(bool){
         QPoint p = pTitleBar->funcListButton->geometry().bottomLeft();
         setWid->show();
         setWid->raise();
-        setWid->setGeometry(p.x() - 130,p.y() + 4,160,248);
+        //设置界面窗口大小暂时设置成魔数
+        setWid->setGeometry(p.x() - 130,p.y() + 4,160,208);
         setWid->setStyleSheet(
             "QWidget{border-radius:6px;background-color: #303033;}"
             "box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.75);"
@@ -460,7 +488,6 @@ void MainWindow::imageSaved(int id, const QString &fileName)
     Q_UNUSED(fileName);
     qDebug() << imagePath;
 }
-
 
 
 void MainWindow::imageView(QString filename)
@@ -699,4 +726,27 @@ void MainWindow::clickBrust(){
     else{
 
     }
+}
+
+void MainWindow::quit(){
+    this->window()->close();
+}
+
+void MainWindow::initAbout(){
+    QPoint pos = QWidget::mapToGlobal(QPoint(250,150));
+    aboutWinWidget->setGeometry(QRect(pos.x(),pos.y(),0,0));
+    aboutWinWidget->setWindowModality(Qt::ApplicationModal);
+    aboutWinWidget->showOrHide();
+}
+
+void MainWindow::initHelp(){
+    DaemonIpcDbus *ipcDbus = new DaemonIpcDbus();
+    if(!ipcDbus->daemonIsNotRunning()){
+        ipcDbus->showGuide("kylin-camera");
+    }
+}
+
+void MainWindow::thememenu(){
+    QPoint p = setWid->theme->geometry().topRight();
+    setWid->themeMenu->exec(mapToGlobal(p));
 }

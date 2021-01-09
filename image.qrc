@@ -47,5 +47,6 @@
         <file>image/camera-app@2x.png</file>
         <file>image/document-open-symbolic.png</file>
         <file>image/document-open-symbolic@2x.png</file>
+        <file>image/kylin-camera.png</file>
     </qresource>
 </RCC>

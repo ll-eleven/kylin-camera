@@ -17,7 +17,7 @@ SettingPage::SettingPage()
 #endif
     this->hide();
     this->setWindowTitle(tr("setting"));
-    this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
+//    this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
     this->raise();
     init_ui();
     change_item();
@@ -32,6 +32,7 @@ void SettingPage::Geometry(QPoint *pos){
 //设置ui
 void SettingPage::init_ui(){
 //    this->setAttribute(Qt::WA_StyledBackground);
+//    setting = new QSettings;
     dirlab = new QLabel;
     scalelab = new QLabel;
     cameraDevicelab = new QLabel;
@@ -68,7 +69,7 @@ void SettingPage::init_ui(){
           "line-height: 14px;"
           "opacity: 1;"
           );
-//    current_dir_lab->setSizePolicy();
+//    current_dir_lab->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     dirlab->setText(tr("The image path"));
     scalelab->setText(tr("The image scale"));
     cameraDevicelab->setText(tr("Camera device"));
@@ -98,6 +99,12 @@ void SettingPage::init_ui(){
     confirm->setText(tr("confirm"));
     cancel->setText(tr("cancel"));
 
+
+    scale->setCurrentIndex(setting->value("scale").toInt());
+//    if(setting->value("scale").toInt()){
+//        qDebug () << "settingpage.cpp:103" << "scale setting :" << setting->value("scale").toInt();
+
+//    }
     //设置按钮布局
     scaleLayout->addSpacing(8);
     scaleLayout->addWidget(scalelab);
@@ -112,14 +119,16 @@ void SettingPage::init_ui(){
 
     QLabel *icon = new QLabel;
     icon->setPixmap(QPixmap::fromImage( QImage((":/image/document-open-symbolic.png"))));
+
     dirbtnLayout->addWidget(current_dir_lab);
-    dirbtnLayout->addSpacing(99);
+    dirbtnLayout->addStretch(99);
     dirbtnLayout->addWidget(icon);
     dirbtnLayout->setMargin(0);
     dir->setLayout(dirbtnLayout);
 
     dirLayout->addSpacing(8);
     dirLayout->addWidget(dirlab);
+    dirLayout->addStretch(10);
     dirLayout->addWidget(dir);
     dirLayout->setMargin(0);
 
@@ -176,7 +185,7 @@ void SettingPage::change_item(){
     //将读到的设备加到设置列表中
     foreach(const QCameraInfo &cameraInfo,*CameraPage::cameras){
         if(cameraDevice)
-        cameraDevice->addItem(cameraInfo.description());
+            cameraDevice->addItem(cameraInfo.description());
         qDebug() << "device : " << cameraInfo.deviceName();
         camera_name2dev[cameraInfo.description()] = cameraInfo.deviceName();
     }
@@ -191,16 +200,15 @@ void SettingPage::change_item(){
 //    }
     CameraPage::cameras->clear();
     CameraPage::audios->clear();
-    qDebug() << "settingpage.cpp:190";
 }
 
 
 
 //这个其实是一个假的槽函数，它并不能修改设备，它只是将设备的名字加到label里
 void SettingPage::change_cameraDevice(const char *dev_name){
-//    QString str(dev_name);
-//    current_cameraDev->setText(str);
+
 }
+
 
 void SettingPage::dir_click(){
 
@@ -220,6 +228,7 @@ void SettingPage::dir_click(){
     }
 }
 
+
 void SettingPage::confirm_click(){
     //设置摄像头
     qDebug()<< CameraPage::current_indevice  << camera_name2dev[cameraDevice->currentText()];
@@ -236,6 +245,8 @@ void SettingPage::confirm_click(){
     //切换分辨率
     if(scale_str != scale->currentText()){
         emit change_resolutions(CurrentDeviceInfo::available_size[scale->currentIndex()]);
+        setting->setValue("scale",scale->currentIndex());
+        qDebug() << "settingpage.cpp:250 " <<  scale->currentIndex();
     }
 
     cancel_click();
@@ -259,4 +270,7 @@ void SettingPage::update(){
         scale_str = QString::number(Size.first) + "x" + QString::number(Size.second);
         dev_change = 0;
     }
+
+    scale->setCurrentIndex(setting->value("scale").toInt());
+
 }

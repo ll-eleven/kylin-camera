@@ -68,7 +68,7 @@ void CameraPage::displayCameraError(){
     layout->addWidget(widget2);
     layout->addStretch(10);
     No_device_icon->setPixmap(QPixmap(":/image/camera-disconnected.png"));
-    No_device_lab->setText("未发现设备");
+    No_device_lab->setText(tr("No device were found"));
     No_device_lab->setStyleSheet( \
                                  "width: 72px;"
                                  "height: 18px;"
@@ -138,20 +138,7 @@ void CameraPage::creatCameraPage(const char *in_devname){
             break;
         }
     }
-    //初始化声音设备
-    for( QAudioDeviceInfo &deviceInfo: QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
-    {
-        if(deviceInfo.deviceName().contains("Camera"))
-        {
-            qDebug()<<"audio device:"<<deviceInfo.deviceName() ;
-//            camera->camera_audio_init(deviceInfo);
-            break;
-        }
-        else
-        {
-             qDebug()<<deviceInfo.deviceName();
-        }
-    }
+
 
     camera_info.format = CurrentDeviceInfo::available_format;
     camera_info.width = CurrentDeviceInfo::available_size.front().first;
@@ -161,6 +148,22 @@ void CameraPage::creatCameraPage(const char *in_devname){
     qDebug()<<in_devname;
     videoDisplay = camera->create(this, &camera_info);
     strcpy(current_indevice,in_devname);
+
+    //初始化声音设备
+//    for( QAudioDeviceInfo &deviceInfo: QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
+//    {
+//        if(deviceInfo.deviceName().contains("Camera"))
+//        {
+//            qDebug()<<"audio device:"<<deviceInfo.deviceName() ;
+//            camera->camera_audio_init(deviceInfo);
+//            break;
+//        }
+//        else
+//        {
+//             qDebug()<<deviceInfo.deviceName();
+//        }
+//    }
+
     videoDisplay->setWindowFlags(Qt::CustomizeWindowHint|Qt::FramelessWindowHint);
     layout->setMargin(0);
     layout->addWidget(videoDisplay);
@@ -178,11 +181,11 @@ void CameraPage::change_resolution(QPair<uint, uint> resolution){
     KylinCameraInfo camerainfo;
     memset(&camerainfo,0X00,sizeof(KylinCameraInfo));
     memcpy(camerainfo.devname,current_indevice,strlen(current_indevice)+1);
-//    camerainfo.format = V4L2_PIX_FMT_MJPEG;
-    camerainfo.format = CurrentDeviceInfo::available_format;
+    camerainfo.format = V4L2_PIX_FMT_YUYV;
+//    camerainfo.format = CurrentDeviceInfo::available_format;
     camerainfo.width = resolution.first;
     camerainfo.height = resolution.second;
-    camerainfo.fps = 15;
+    camerainfo.fps = 30;
 
     camera->camera_set_param(&camerainfo);
 }
@@ -259,7 +262,6 @@ void CameraPage::updateRecordTime()
 //正在使用的设备被拔出时，若有其他设备则切换其他设备，若无设备则显示无设备界面
 void CameraPage::timeEvent()
 {
-
     static int i = 0;
     *cameras = QCameraInfo::availableCameras();
     qDebug() << "call time : " << ++i;

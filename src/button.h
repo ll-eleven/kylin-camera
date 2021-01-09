@@ -55,7 +55,7 @@ private slots:
 private:
 
     QHBoxLayout *btnLayout;
-    QSettings *set;
+    QSettings *set = new QSettings;
     bool Burst_mode = false;
     bool picturepage_show = false;
 };

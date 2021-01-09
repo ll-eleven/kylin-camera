@@ -59,37 +59,39 @@ LIBS += -lkylincamera \
 INCLUDEPATH += /usr/include/kylincameralibs/
 
 SOURCES += \
-    src/about.cpp \
+    src/aboutwidget.cpp \
     src/albumread.cpp \
     src/button.cpp \
     src/camerapage.cpp \
     src/currentdeviceinfo.cpp \
+    src/daemonipcdbus.cpp \
     src/deviceread.cpp \
-    src/help.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/mylistwidgetitem.cpp \
     src/pictureviewpage.cpp \
     src/setting.cpp \
     src/settingpage.cpp \
+    src/stylewidgetattribute.cpp \
     src/switchbutton.cpp \
     src/titlebar.cpp \
     src/widgetstyle.cpp \
     src/xatom-helper.cpp
 
 HEADERS += \
-    src/about.h \
+    src/aboutwidget.h \
     src/albumread.h \
     src/button.h \
     src/camerapage.h \
     src/currentdeviceinfo.h \
+    src/daemonipcdbus.h \
     src/deviceread.h \
-    src/help.h \
     src/mainwindow.h \
     src/mylistwidgetitem.h \
     src/pictureviewpage.h \
     src/setting.h \
     src/settingpage.h \
+    src/stylewidgetattribute.h \
     src/switchbutton.h \
     src/titlebar.h \
     src/widgetstyle.h \
