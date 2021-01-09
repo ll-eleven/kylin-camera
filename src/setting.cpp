@@ -143,7 +143,7 @@ void Setting::init_ui(){
     vlayout->addWidget(delay);
 //    vlayout->addWidget(mirror);
     vlayout->addWidget(set);
-//    vlayout->addWidget(theme);
+    vlayout->addWidget(theme);
     vlayout->addWidget(help);
     vlayout->addWidget(about);
     vlayout->addWidget(quit);

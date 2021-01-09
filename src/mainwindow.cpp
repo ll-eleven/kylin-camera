@@ -29,7 +29,6 @@
 //相册宽度
 #define picture_width 270
 int MainWindow::picture_number;
-
 MainWindow::MainWindow(QWidget *parent)
   : QWidget(parent)
 {
@@ -259,6 +258,7 @@ void MainWindow::clickPhoto()
 
         timer = new QTimer(this);
         is_vedio = false;
+        Button::vedio_start = 1; //关闭录像切换功能
         connect(timer,&QTimer::timeout, this, &MainWindow::timeEvent);
         timer->start(1000);
         dead_time_sec_tmp = 0;
@@ -319,7 +319,7 @@ void MainWindow::clickStartRecord()
 //        camerapage->timeLabel->setLayout(hlayout);
 //        camerapage->layout->addWidget(camerapage->timeLabel);
 
-
+        //显示录像数字
         camerapage->recorder_time_label->show();
         camerapage->recorder_time_label->raise();
         camerapage->recorder_time->start(1000);
@@ -434,7 +434,7 @@ void MainWindow::funcListHandle(bool){
         setWid->show();
         setWid->raise();
         //设置界面窗口大小暂时设置成魔数
-        setWid->setGeometry(p.x() - 130,p.y() + 4,160,208);
+        setWid->setGeometry(p.x() - 130,p.y() + 4,160,288);
         setWid->setStyleSheet(
             "QWidget{border-radius:6px;background-color: #303033;}"
             "box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.75);"
@@ -549,7 +549,6 @@ void MainWindow::imageDisplay(QString filename)
     picture_setting->setValue(QString::number(picture_number),filename);
     setting->setValue("picture_number",picture_number);
 
-
     imageItem->setIcon(QIcon(fitPixmap));
     imageItem->setStatusTip(filename);
 
@@ -659,12 +658,13 @@ void MainWindow::save_dir_change(){
     qDebug() << "save dir change" << imagePath;
 }
 
-
+//计时器触发函数
 void MainWindow::timeEvent()
 {
     if(dead_time_sec_tmp >= dead_time_sec)
     {
         timer->stop();
+        Button::vedio_start = 0; //开启录像切换功能
         dead_time_sec_tmp = 0;
         camerapage->dead_time->hide();
         QString name=creatName();
@@ -746,11 +746,11 @@ void MainWindow::initHelp(){
     }
 }
 
+
 void MainWindow::thememenu(){
     QPoint p = setWid->theme->geometry().topRight();
-
-
     setWid->themeMenu->exec(mapToGlobal(p));
+    setWid->themeMenu->raise();
 //    QMenu *themeMenu = new QMenu;
 //    QActionGroup *themeMenuGroup = new QActionGroup(this);
 //    QAction *autoTheme = new QAction(tr("Auto"),this);

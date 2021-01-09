@@ -134,7 +134,6 @@ private:
     QTimer *timer = nullptr;
     //倒计时
     QWidget *dead_time;
-
     QProcess *proc;
     QPoint m_start;
     QPoint m_end;
