@@ -100,7 +100,10 @@ void SettingPage::init_ui(){
     cancel->setText(tr("cancel"));
 
 
-    scale->setCurrentIndex(setting->value("scale").toInt());
+    //保存用户配置
+//    scale->setCurrentIndex(theme_setting->value("scale").toInt());
+
+
 //    if(setting->value("scale").toInt()){
 //        qDebug () << "settingpage.cpp:103" << "scale setting :" << setting->value("scale").toInt();
 
@@ -137,7 +140,7 @@ void SettingPage::init_ui(){
 //    cameraDeviceLayout->addWidget(current_cameraDev);
     cameraDeviceLayout->addWidget(cameraDevice);
     cameraDeviceLayout->setMargin(0);
-    cameraDevice->setCurrentText("wufang");
+//    cameraDevice->setCurrentText("wufang");
 
     btnLayout->addSpacing(99);
     btnLayout->addWidget(cancel);
@@ -204,7 +207,7 @@ void SettingPage::change_item(){
 
 
 
-//这个其实是一个假的槽函数，它并不能修改设备，它只是将设备的名字加到label里
+//
 void SettingPage::change_cameraDevice(const char *dev_name){
 
 }
@@ -214,7 +217,6 @@ void SettingPage::dir_click(){
 
     current_dir = QFileDialog::getExistingDirectory(nullptr,tr("Select the directory"),"/home",
                                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-
     QString first = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     if(QDir(current_dir).exists() && current_dir != "" && current_dir.contains(first,Qt::CaseSensitive)){
         current_dir.append('/');
@@ -243,10 +245,10 @@ void SettingPage::confirm_click(){
     }
 
     //切换分辨率
-    if(scale_str != scale->currentText()){
+    if(theme_setting->value("scale").toInt() != scale->currentIndex()){
         emit change_resolutions(CurrentDeviceInfo::available_size[scale->currentIndex()]);
-        setting->setValue("scale",scale->currentIndex());
-        qDebug() << "settingpage.cpp:250 " <<  scale->currentIndex();
+        theme_setting->setValue("scale",scale->currentIndex());
+        qDebug() << "settingpage.cpp:250 " <<  theme_setting->value("scale").toInt();
     }
 
     cancel_click();
@@ -259,7 +261,7 @@ void SettingPage::cancel_click(){
 //更新设备信息
 void SettingPage::update(){
     if(dev_change){
-        scale->clear();
+//        scale->clear();
         for(auto p : CurrentDeviceInfo::available_size){
             QString str;
             str = QString::number(p.first) + "x" + QString::number(p.second);
@@ -270,7 +272,7 @@ void SettingPage::update(){
         scale_str = QString::number(Size.first) + "x" + QString::number(Size.second);
         dev_change = 0;
     }
-
-    scale->setCurrentIndex(setting->value("scale").toInt());
+    scale->setCurrentIndex(theme_setting->value("scale").toInt());
+    qDebug() << theme_setting->value("scale").toInt();
 
 }

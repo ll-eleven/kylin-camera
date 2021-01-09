@@ -65,23 +65,23 @@ MainWindow::MainWindow(QWidget *parent)
     setCommonUI();
 
     //将上次的拍照和录像保存
-    picture_number = setting->value("picture_number").toInt();
-    QStringList picture_list =  picture_setting->childKeys();
-    for(QString str : picture_list){
-        //配置文件中的地址存在
-//        picture_setting->remove(str);
-        QString pictureName = picture_setting->value(str).toString();
-        qDebug()<< str + " : " + pictureName;
-        if(QFile(pictureName).exists()){
-            qDebug() << "exist";
-            qDebug() << picture_number;
-//            imageView(pictureName);
-        }
-        else{
-            qDebug() << "no exist";
-            picture_setting->remove(str);
-        }
-    }
+//    picture_number = setting->value("picture_number").toInt();
+//    QStringList picture_list =  picture_setting->childKeys();
+//    for(QString str : picture_list){
+//        //配置文件中的地址存在
+////        picture_setting->remove(str);
+//        QString pictureName = picture_setting->value(str).toString();
+//        qDebug()<< str + " : " + pictureName;
+//        if(QFile(pictureName).exists()){
+//            qDebug() << "exist";
+//            qDebug() << picture_number;
+////            imageView(pictureName);
+//        }
+//        else{
+//            qDebug() << "no exist";
+//            picture_setting->remove(str);
+//        }
+//    }
 
     watcher = new QFileSystemWatcher;
     watcher->addPath("/dev/");
@@ -748,5 +748,33 @@ void MainWindow::initHelp(){
 
 void MainWindow::thememenu(){
     QPoint p = setWid->theme->geometry().topRight();
+
+
     setWid->themeMenu->exec(mapToGlobal(p));
+//    QMenu *themeMenu = new QMenu;
+//    QActionGroup *themeMenuGroup = new QActionGroup(this);
+//    QAction *autoTheme = new QAction(tr("Auto"),this);
+//    themeMenuGroup->addAction(autoTheme);
+//    themeMenu->addAction(autoTheme);
+//    autoTheme->setCheckable(true);
+//    QAction *lightTheme = new QAction(tr("Light"),this);
+//    themeMenuGroup->addAction(lightTheme);
+//    themeMenu->addAction(lightTheme);
+//    lightTheme->setCheckable(true);
+//    QAction *darkTheme = new QAction(tr("Dark"),this);
+//    themeMenuGroup->addAction(darkTheme);
+//    themeMenu->addAction(darkTheme);
+//    darkTheme->setCheckable(true);
+//    QList<QAction* > themeActions;
+//    themeActions<<autoTheme<<lightTheme<<darkTheme;
+
+////    autoTheme->setChecked(true);
+//    actionTheme->setMenu(themeMenu);
+//    menuButton->setMenu(m_menu);
+
+//    connect(m_menu,&QMenu::triggered,this,&menuModule::triggerMenu);
+//    initGsetting();
+//    themeUpdate();
+//    connect(themeMenu,&QMenu::triggered,this,&menuModule::triggerThemeMenu);
+
 }

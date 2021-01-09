@@ -64,7 +64,7 @@ private:
     QMap<QString,QString> camera_name2dev;
     QMap<QString,QString> audio_name2dev;
     QString scale_str;
-    QSettings *setting = new QSettings;
+    QSettings *theme_setting = new QSettings;
     void mousePressEvent(QEvent *);
     static int dev_change;
 };

@@ -1,6 +1,6 @@
-kylin-camera (1.1.2kord9~rc3) v101; urgency=medium
+kylin-camera (1.1.2kord9~rc4) v101; urgency=medium
 
-  * 解决了窗口跳跃问题
+  * 解决了用户设置无法保存的问题
   * 修改设置界面 
 
  -- songxikang <songxikang@kylinos.cn>  Fri, 4 Dec 2020 20:26:06 +0800
