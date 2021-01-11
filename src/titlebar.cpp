@@ -35,35 +35,48 @@ TitleBar::TitleBar(QWidget *parent)
     m_pCloseButton->setFixedSize(30,30);
     funcListButton->setFixedSize(30,30);
 
-
     icon = new QLabel;//图标
     icon->setPixmap(QPixmap::fromImage(QImage(":/image/camera-app@2x.png")));
 
+#ifndef __V10__
     funcListButton->setIcon(QIcon::fromTheme("application-menu"));
     m_pMinimizeButton->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
     m_pCloseButton->setIcon(QIcon::fromTheme("window-close"));
-//    m_pCloseButton->setProperty("isWindowButton",0x2);
-//    m_pCloseButton->setProperty("useIconHighlightEffect",0x8);
-//    m_pCloseButton->setAutoRaise(true);
-//    m_pMaximizeButton->setIcon(QIcon(":/image/max.png"));
     m_pMaximizeButton->setIcon(QIcon::fromTheme("window-maximize-symbolic"));
+#else
+    funcListButton->setIcon(QIcon(":/image/funclist.png"));
+    m_pMinimizeButton->setIcon(QIcon(":/image/min.png"));
+    m_pCloseButton->setIcon(QIcon(":/image/close.png"));
+    m_pMaximizeButton->setIcon(QIcon(":/image/max.png"));
+#endif
+
+
+    m_pCloseButton->setProperty("isWindowButton",0x2);
+    m_pCloseButton->setProperty("useIconHighlightEffect",0x8);
+//    m_pCloseButton->setAutoRaise(true);
 
 //    funcListButton->setAcceptDrops();
+
     funcListButton->setProperty("isWindowButton", 0x1);
     funcListButton->setProperty("useIconHighlightEffect", 0x2);
     funcListButton->setFlat(true);
+    funcListButton->setFocusPolicy(Qt::NoFocus);
 
     m_pMinimizeButton->setProperty("isWindowButton", 0x1);
     m_pMinimizeButton->setProperty("useIconHighlightEffect", 0x2);
     m_pMinimizeButton->setFlat(true);
+    m_pMinimizeButton->setChecked(false);
+    m_pMinimizeButton->setFocusPolicy(Qt::NoFocus);
 
     m_pCloseButton->setProperty("isWindowButton", 0x2);
     m_pCloseButton->setProperty("useIconHighlightEffect", 0x8);
     m_pCloseButton->setFlat(true);
+    m_pCloseButton->setFocusPolicy(Qt::NoFocus);
 
     m_pMaximizeButton->setProperty("isWindowButton", 0x1);
     m_pMaximizeButton->setProperty("useIconHighlightEffect", 0x2);
     m_pMaximizeButton->setFlat(true);
+    m_pMaximizeButton->setFocusPolicy(Qt::NoFocus);
 
     // 设置对象名
     m_pFuncLabel->setObjectName("whiteLabel");
@@ -71,17 +84,20 @@ TitleBar::TitleBar(QWidget *parent)
     m_pMinimizeButton->setObjectName("minimizeButton");
     m_pMaximizeButton->setObjectName("maximizeButton");
     m_pCloseButton->setObjectName("closeButton");
-
     m_pFuncLabel->setText(tr("kylin-camera"));
-//    m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;font-family:SourceHanSansCN-Regular;");
-//    QString btnStyle = \
-//                     "QPushButton{border-radius:4px;}"
-//                     "QPushButton:hover{background-color:rgba(255,255,255,0.1);}"
-//                     "QPushButton:pressed{background-color:rgba(255,255,255,0.15);}";
-//    funcListButton->setStyleSheet(btnStyle);
-//    m_pMinimizeButton->setStyleSheet(btnStyle);
-//    m_pMaximizeButton->setStyleSheet(btnStyle);
-//    m_pCloseButton->setStyleSheet("QPushButton{border-radius:4px;}QPushButton:hover{background-color:#F86457;}");
+
+#ifdef __V10__
+    m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;font-family:SourceHanSansCN-Regular;");
+    QString btnStyle = \
+                     "QPushButton{border-radius:4px;}"
+                     "QPushButton:hover{background-color:rgba(255,255,255,0.1);}"
+                     "QPushButton:pressed{background-color:rgba(255,255,255,0.15);}";
+    funcListButton->setStyleSheet(btnStyle);
+    m_pMinimizeButton->setStyleSheet(btnStyle);
+    m_pMaximizeButton->setStyleSheet(btnStyle);
+    m_pCloseButton->setStyleSheet("QPushButton{border-radius:4px;}QPushButton:hover{background-color:#F86457;}");
+#endif
+
 
     // 设置按钮布局
     QHBoxLayout *pLayout = new QHBoxLayout(this);
@@ -112,6 +128,8 @@ TitleBar::TitleBar(QWidget *parent)
     connect(m_pMaximizeButton,&QPushButton::clicked,this,&TitleBar::onClicked);
     connect(funcListButton,&QPushButton::clicked,this,&TitleBar::onClicked);
 }
+
+
 TitleBar::~TitleBar()
 {
 

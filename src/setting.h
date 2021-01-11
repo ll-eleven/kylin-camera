@@ -58,8 +58,6 @@ public:
     QVBoxLayout *vlayout;
 
     DaemonIpcDbus *m_pDaemonIpcDbus;
-
-
     void init_ui();
 signals:
 

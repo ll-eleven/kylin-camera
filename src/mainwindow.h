@@ -55,11 +55,12 @@ public:
     void setbutton();
     void setcamerapage();
     void setpicturepage();
-
+    void loadPhoto();
 
     //声明配置文件
-    QSettings *picture_setting = new QSettings;
-    QSettings *setting = new QSettings;
+    QSettings *picture_setting = new QSettings(QCoreApplication::applicationDirPath() + "/.configure/kylin-camera/picture_setting");
+    QSettings *setting = new QSettings(QCoreApplication::applicationDirPath() + "/.configure/kylin-camera/setting");
+    QSettings *isVedio_setting = new QSettings(QCoreApplication::applicationDirPath() + "/.configure/kylin-camera/isVedio_setting");
     QPoint temp;
     bool settingShow = false;
     static int picture_number;
@@ -90,17 +91,20 @@ private slots:
     void setMaxWindow(bool);
     void settingPageShow();
     void updateRecordTime();
-    void imageView(QString);
+    void imageView(QString,bool);
     void quit();
     void initAbout();
     void initHelp();
     void thememenu();
+    void listWidgetUpdate(int);
 protected:
     virtual void mousePressEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
     virtual void mouseReleaseEvent(QMouseEvent *);
 private:
     Qt::WindowFlags winFlags;
+    QStringList::reverse_iterator iter;
+    QStringList picture_list;
     QString fileNameTemp;
     QWidget *ViewWid;
     QWidget *PictureWid;
@@ -145,5 +149,6 @@ private:
     int dead_time_sec_tmp = 0;
     bool is_vedio = false;
     bool Burst_mode = false;
+    bool press = false;
 };
 #endif // MAINWINDOW_H

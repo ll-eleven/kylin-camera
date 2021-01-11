@@ -36,7 +36,10 @@ public slots:
   //  void delay_click();
   //  void mirror_click();
 
-
+protected:
+    void mouseMoveEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
 private:
     QLabel *dirlab;
     QLabel *scalelab;
@@ -61,12 +64,13 @@ private:
     QHBoxLayout *cameraDeviceLayout;
     QHBoxLayout *vedioDeviceLayout;
     QPoint *pos;
+    QPoint m_start;
     QMap<QString,QString> camera_name2dev;
     QMap<QString,QString> audio_name2dev;
     QString scale_str;
     QSettings *theme_setting = new QSettings;
-    void mousePressEvent(QEvent *);
     static int dev_change;
+    static bool press;
 };
 
 #endif // SETTINGPAGE_H

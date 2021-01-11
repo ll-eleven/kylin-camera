@@ -6,7 +6,7 @@
 #include <QErrorMessage>
 #include "currentdeviceinfo.h"
 #include "unistd.h"
-
+bool SettingPage::press = false;
 int SettingPage::dev_change = 1;
 SettingPage::SettingPage()
 
@@ -256,6 +256,34 @@ void SettingPage::confirm_click(){
 
 void SettingPage::cancel_click(){
     this->window()->close();
+}
+
+void SettingPage::mousePressEvent(QMouseEvent *event){
+    press = true;
+    if(event->button() == Qt::LeftButton){
+        m_start = event->globalPos();
+    }
+}
+
+void SettingPage::mouseMoveEvent(QMouseEvent *event)
+{
+    if(!press) return;
+    // 持续按住才做对应事件
+//    if(pTitleBar->m_leftButtonPressed) {
+//        将父窗体移动到父窗体原来的位置加上鼠标移动的位置：event->globalPos()-m_start
+//        将鼠标在屏幕中的位置替换为新的位置
+        this->move(event->globalPos() + this->geometry().topLeft() - m_start);
+        m_start = event->globalPos();
+//    }
+}
+
+void SettingPage::mouseReleaseEvent(QMouseEvent *event)
+{
+    // 鼠标左键释放
+    if (event->button() == Qt::LeftButton) {
+        // 记录鼠标状态
+        press = false;
+    }
 }
 
 //更新设备信息

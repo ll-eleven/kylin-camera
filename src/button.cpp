@@ -139,8 +139,18 @@ Button::Button(QWidget *parent)
     stop->setFlat(true);
     cheese_vedio->setFlat(true);
     cheese_stop->setFlat(true);
-//    Burst->setFlat(true);
     picture->setFlat(true);
+
+    capture->setFocusPolicy(Qt::NoFocus);
+    vedio->setFocusPolicy(Qt::NoFocus);
+    voice->setFocusPolicy(Qt::NoFocus);
+    cheese->setFocusPolicy(Qt::NoFocus);
+    stop->setFocusPolicy(Qt::NoFocus);
+    cheese_vedio->setFocusPolicy(Qt::NoFocus);
+    cheese_stop->setFocusPolicy(Qt::NoFocus);
+    picture->setFocusPolicy(Qt::NoFocus);
+
+
     picture->setAutoFillBackground(0);
 
 //    this->setAttribute(Qt::WA_Hover, true);

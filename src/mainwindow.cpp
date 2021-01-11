@@ -9,7 +9,7 @@
 #include <QTime>
 #include "aboutwidget.h"
 #include <QDesktopWidget>
-
+#define NUMBER_LOAD 100   //加载数量
 #define TABWINDOWWIDETH 80                   //窗口宽度
 #define TABWINDOWHEIGHT 84                   //窗口高度
 #define TABTITLEHEIGHT 42                    //标题栏高度
@@ -64,23 +64,27 @@ MainWindow::MainWindow(QWidget *parent)
     setCommonUI();
 
     //将上次的拍照和录像保存
-//    picture_number = setting->value("picture_number").toInt();
-//    QStringList picture_list =  picture_setting->childKeys();
-//    for(QString str : picture_list){
-//        //配置文件中的地址存在
-////        picture_setting->remove(str);
-//        QString pictureName = picture_setting->value(str).toString();
-//        qDebug()<< str + " : " + pictureName;
-//        if(QFile(pictureName).exists()){
-//            qDebug() << "exist";
-//            qDebug() << picture_number;
-////            imageView(pictureName);
-//        }
-//        else{
-//            qDebug() << "no exist";
-//            picture_setting->remove(str);
-//        }
-//    }
+    picture_number = setting->value("picture_number").toInt();
+    picture_list = picture_setting->childKeys();
+
+    iter = picture_list.rbegin();
+//    if(picture_list.size() > NUMBER_LOAD)
+    for(int num = 0;iter != picture_list.rend();iter++){
+        //配置文件中的地址存在
+        QString str = *iter;
+        QString pictureName = picture_setting->value(str).toString();
+        bool isVedio = isVedio_setting->value(str).toBool();
+        qDebug()<< str + " : " + pictureName;
+        if(QFile(pictureName).exists()){
+            qDebug() << picture_number;
+            if(num > NUMBER_LOAD) break;
+            imageView(pictureName,isVedio);
+            num++;
+        }
+        else{
+            picture_setting->remove(str);
+        }
+    }
 
     watcher = new QFileSystemWatcher;
     watcher->addPath("/dev/");
@@ -96,10 +100,9 @@ MainWindow::MainWindow(QWidget *parent)
 //    connect(watcher,&QFileSystemWatcher::directoryChanged,camerapage,&CameraPage::timeEvent);
 
 
-//    connect(QGSettings::changed("theme-ukui")
-//#ifdef __V10__
-//    this->setStyleSheet("MainWindow{background-color:#000000;}");
-//#endif
+#ifdef __V10__
+    this->setStyleSheet("MainWindow{background-color:#000000;}");
+#endif
     this->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 
 }
@@ -198,7 +201,7 @@ void MainWindow ::setCommonUI(){
     //item事件
     connect(viewpage->listWidget,SIGNAL(itemDoubleClicked(QListWidgetItem*)),this,SLOT(itemDoubleClicked(QListWidgetItem*)));
     connect(viewpage->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(itemclicked(QListWidgetItem*)));
-
+    connect(viewpage->listWidget->verticalScrollBar(),&QScrollBar::valueChanged,this,&MainWindow::listWidgetUpdate);
     //设置事件
     connect(setPage,SIGNAL(dir_change()),this,SLOT(save_dir_change()));
     connect(setPage,&SettingPage::change_resolutions,camerapage,&CameraPage::change_resolution);
@@ -210,8 +213,8 @@ void MainWindow ::setCommonUI(){
     connect(setWid->about,&QPushButton::clicked,this,&MainWindow::initAbout);
     connect(setWid->help,&QPushButton::clicked,this,&MainWindow::initHelp);
     connect(setWid->theme,&QPushButton::clicked,this,&MainWindow::thememenu);
-}
 
+}
 
 
 void MainWindow::clickPause()
@@ -388,6 +391,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
 //鼠标按下事件,收起设置菜单
 void MainWindow::mousePressEvent(QMouseEvent *event){
 
+    press = true;
     int x = event->x();
     int y = event->y();
     //在小窗口模式下，点击是否在设置区域内
@@ -395,7 +399,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
     QPushButton *pButton = qobject_cast<QPushButton *>(sender());
     qDebug() << pButton;
     if(event->button() == Qt::LeftButton){
-        pTitleBar->m_setButtonPressed = true;
         m_start = event->globalPos();
     }
     if(/*event->button() == Qt::LeftButton &&*/ pTitleBar->m_setButtonPressed && !in_setting ||
@@ -408,11 +411,12 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
+    if(!press) return;
     // 持续按住才做对应事件
 //    if(pTitleBar->m_leftButtonPressed) {
-        //将父窗体移动到父窗体原来的位置加上鼠标移动的位置：event->globalPos()-m_start
-        //将鼠标在屏幕中的位置替换为新的位置
-//        this->move(event->globalPos() + this->geometry().topLeft() - m_start);
+//        将父窗体移动到父窗体原来的位置加上鼠标移动的位置：event->globalPos()-m_start
+//        将鼠标在屏幕中的位置替换为新的位置
+        this->move(event->globalPos() + this->geometry().topLeft() - m_start);
         m_start = event->globalPos();
 //    }
 }
@@ -423,6 +427,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton) {
         // 记录鼠标状态
         pTitleBar->m_leftButtonPressed = false;
+        press = false;
     }
 }
 
@@ -434,6 +439,7 @@ void MainWindow::funcListHandle(bool){
         setWid->show();
         setWid->raise();
         //设置界面窗口大小暂时设置成魔数
+//        setWid->geometry()
         setWid->setGeometry(p.x() - 130,p.y() + 4,160,288);
         setWid->setStyleSheet(
             "QWidget{border-radius:6px;background-color: #303033;}"
@@ -490,7 +496,8 @@ void MainWindow::imageSaved(int id, const QString &fileName)
 }
 
 
-void MainWindow::imageView(QString filename)
+//初始化相册时使用，从前往后插入图片
+void MainWindow::imageView(QString filename,bool isVedio)
 {
     QPixmap *pixmap = new QPixmap;
     if(!pixmap->load(filename))
@@ -502,7 +509,8 @@ void MainWindow::imageView(QString filename)
 
     //录像模式标识显示在图片上
 
-    if(is_vedio){
+
+    if(isVedio){
         QImage imageB(":/image/video-x-generic-symbolic.svg");
         imageB = imageB.scaled(30,30,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
         QPainter imagepainter(&fitPixmap);  //新建画板
@@ -515,7 +523,8 @@ void MainWindow::imageView(QString filename)
     imageItem->setIcon(QIcon(fitPixmap));
     imageItem->setStatusTip(filename);
 
-    viewpage->listWidget->addItem(imageItem);
+    viewpage->listWidget->insertItem(0,imageItem);
+//    viewpage->listWidget->addItem(imageItem);
     viewpage->listWidget->scrollToBottom();
     delete pixmap;
 }
@@ -547,6 +556,7 @@ void MainWindow::imageDisplay(QString filename)
     //在配置文件中存储拍照的路径
     picture_number++;
     picture_setting->setValue(QString::number(picture_number),filename);
+    isVedio_setting->setValue(QString::number(picture_number),is_vedio);
     setting->setValue("picture_number",picture_number);
 
     imageItem->setIcon(QIcon(fitPixmap));
@@ -649,6 +659,31 @@ void MainWindow::itemclicked(QListWidgetItem* item){
 }
 
 
+void MainWindow::listWidgetUpdate(int num){
+    if(0 == num){
+        loadPhoto();
+    }
+}
+
+void MainWindow::loadPhoto(){
+
+    for(int num = 0;iter != picture_list.rend();iter++){
+        //配置文件中的地址存在
+        QString str = *iter;
+        QString pictureName = picture_setting->value(str).toString();
+        bool isVedio = isVedio_setting->value(str).toBool();
+        qDebug()<< str + " : " + pictureName;
+        if(QFile(pictureName).exists()){
+            qDebug() << picture_number;
+            if(num > NUMBER_LOAD) break;
+            imageView(pictureName,isVedio);
+            num++;
+        }
+        else{
+            picture_setting->remove(str);
+        }
+    }
+}
 
 //更改保存路径
 void MainWindow::save_dir_change(){

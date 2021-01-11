@@ -17,7 +17,9 @@ PictureViewPage::PictureViewPage(QWidget *parent)
     title = new QWidget;
     btnpage = new QWidget;
     text->setText(tr("Album"));
-    text->setStyleSheet("font-size:16px;font-family:SourceHanSansCN-Regular;");
+#ifdef __V10__
+    text->setStyleSheet("color:#FFFFFF;font-size:16px;font-family:SourceHanSansCN-Regular;");
+#endif
     deleteBtn->setIcon(QIcon(":/image/delete.svg"));
     deleteBtn->setFlat(true);
     hlayout->setMargin(0);
@@ -31,6 +33,7 @@ PictureViewPage::PictureViewPage(QWidget *parent)
     title->setLayout(hlayout);
     title->setFixedHeight(30);
     deleteBtn->setFlat(true);
+    deleteBtn->setFocusPolicy(Qt::NoFocus);
 
     vlayout->addWidget(title);
     vlayout->addWidget(listWidget);

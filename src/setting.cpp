@@ -18,6 +18,7 @@ Setting::Setting(QWidget *parent)
 //    connect(help,&QPushButton::clicked,this,&Setting::initHelp);
 }
 
+
 void Setting::init_ui(){
     this->setAttribute(Qt::WA_StyledBackground);
 //    this->setAttribute(Qt::WA_TranslucentBackground, false);//窗体透明
@@ -143,7 +144,11 @@ void Setting::init_ui(){
     vlayout->addWidget(delay);
 //    vlayout->addWidget(mirror);
     vlayout->addWidget(set);
+
+
+#ifndef __V10__
     vlayout->addWidget(theme);
+#endif
     vlayout->addWidget(help);
     vlayout->addWidget(about);
     vlayout->addWidget(quit);
@@ -151,13 +156,13 @@ void Setting::init_ui(){
     this->setLayout(vlayout);
 
 
-    QAction *dark = new QAction("dark model");
-    QAction *light = new QAction("light model");
-    QAction *follow = new QAction("follow model");
-    theme->addAction(dark);
-    theme->addAction(light);
-    theme->addAction(follow);
-    theme->setMenu(themeMenu);
+//    QAction *dark = new QAction("dark model");
+//    QAction *light = new QAction("light model");
+//    QAction *follow = new QAction("follow model");
+//    theme->addAction(dark);
+//    theme->addAction(light);
+//    theme->addAction(follow);
+//    theme->setMenu(themeMenu);
 
 }
 

@@ -1,3 +1,4 @@
+
 #include "camerapage.h"
 #include <QDebug>
 #include <QDir>
@@ -181,8 +182,8 @@ void CameraPage::change_resolution(QPair<uint, uint> resolution){
     KylinCameraInfo camerainfo;
     memset(&camerainfo,0X00,sizeof(KylinCameraInfo));
     memcpy(camerainfo.devname,current_indevice,strlen(current_indevice)+1);
-    camerainfo.format = V4L2_PIX_FMT_YUYV;
-//    camerainfo.format = CurrentDeviceInfo::available_format;
+    // camerainfo.format = V4L2_PIX_FMT_YUYV;
+   camerainfo.format = CurrentDeviceInfo::available_format;
     camerainfo.width = resolution.first;
     camerainfo.height = resolution.second;
     camerainfo.fps = 30;
