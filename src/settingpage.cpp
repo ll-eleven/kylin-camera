@@ -58,7 +58,8 @@ void SettingPage::init_ui(){
     current_dir_lab = new QLabel;
     current_cameraDev = new QLabel;
     current_vedioDev = new QLabel;
-    QString combobox_style = "QComboBox::drop-down {subcontrol-origin: paddingsubcontrol-position: top right;width: 15px;}";
+    QString combobox_style = "QComboBox::drop-down {subcontrol-origin: paddingsubcontrol-position: top right;"
+                             "width: 15px;border-radius: 4px;}";
 //    vedioDevice->setStyleSheet(combobox_style);
     cameraDevice->setStyleSheet(combobox_style);
     scale->setStyleSheet(combobox_style);
@@ -289,7 +290,7 @@ void SettingPage::mouseReleaseEvent(QMouseEvent *event)
 //更新设备信息
 void SettingPage::update(){
     if(dev_change){
-//        scale->clear();
+        scale->clear();
         for(auto p : CurrentDeviceInfo::available_size){
             QString str;
             str = QString::number(p.first) + "x" + QString::number(p.second);

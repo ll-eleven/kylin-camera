@@ -102,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 #ifdef __V10__
     this->setStyleSheet("MainWindow{background-color:#000000;}");
+    setWindowIcon(QIcon(":/image/camera-app@2x.png"));
 #endif
     this->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 
@@ -401,7 +402,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
     if(event->button() == Qt::LeftButton){
         m_start = event->globalPos();
     }
-    if(/*event->button() == Qt::LeftButton &&*/ pTitleBar->m_setButtonPressed && !in_setting ||
+    if(event->button() == Qt::LeftButton && pTitleBar->m_setButtonPressed && !in_setting ||
         pButton == pTitleBar->m_pMaximizeButton)
     {
         setWid->hide();

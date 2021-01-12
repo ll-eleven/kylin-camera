@@ -96,6 +96,9 @@ void AboutWidget::myStyle(StyleWidgetAttribute swa)
     aboutIcon = new QLabel;
 
     aboutIcon->setPixmap(QPixmap::fromImage(QImage("/usr/share/icons/ukui-icon-theme-default/64x64@2x/apps/kylin-camera.png")));
+#ifdef __V10__
+    aboutIcon->setPixmap(QPixmap::fromImage(QImage(":/image/kylin-camera")));
+#endif
     aboutIcon->setScaledContents(true);
 //    aboutIcon->setIconedSize(96,96);
 

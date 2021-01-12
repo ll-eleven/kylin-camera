@@ -70,7 +70,7 @@ void CameraPage::displayCameraError(){
     layout->addStretch(10);
     No_device_icon->setPixmap(QPixmap(":/image/camera-disconnected.png"));
     No_device_lab->setText(tr("No device were found"));
-    No_device_lab->setStyleSheet( \
+    No_device_lab->setStyleSheet("color:#FFFFFF;"
                                  "width: 72px;"
                                  "height: 18px;"
                                  "font-size: 12px;"
@@ -118,7 +118,8 @@ void CameraPage::creatCameraPage(const char *in_devname){
         if(fmt.frm_sizes_len){
             for(auto a: fmt.frm_sizes){
                  //对于全局变量的准备
-                 CurrentDeviceInfo::available_format = a.frm_size.pixel_format;
+                if(a.frm_size.pixel_format != 0)
+                    CurrentDeviceInfo::available_format = a.frm_size.pixel_format;
                  QPair<uint,uint> discrete;
                  discrete.first = a.frm_size.discrete.width;
                  discrete.second = a.frm_size.discrete.height;
@@ -182,8 +183,9 @@ void CameraPage::change_resolution(QPair<uint, uint> resolution){
     KylinCameraInfo camerainfo;
     memset(&camerainfo,0X00,sizeof(KylinCameraInfo));
     memcpy(camerainfo.devname,current_indevice,strlen(current_indevice)+1);
-    // camerainfo.format = V4L2_PIX_FMT_YUYV;
-   camerainfo.format = CurrentDeviceInfo::available_format;
+//    camerainfo.format = V4L2_PIX_FMT_MJPEG;
+    qDebug() <<  CurrentDeviceInfo::available_format <<  V4L2_PIX_FMT_MJPEG << V4L2_PIX_FMT_YUYV;
+    camerainfo.format = CurrentDeviceInfo::available_format;
     camerainfo.width = resolution.first;
     camerainfo.height = resolution.second;
     camerainfo.fps = 30;
@@ -209,7 +211,9 @@ void CameraPage::change_device(const char *in_device){
         if(fmt.frm_sizes_len){
             for(auto a: fmt.frm_sizes){
                  //对于全局变量的准备
-                 CurrentDeviceInfo::available_format = a.frm_size.pixel_format;
+                if(a.frm_size.pixel_format != 0)
+                    CurrentDeviceInfo::available_format = a.frm_size.pixel_format;
+
                  QPair<uint,uint> discrete;
                  discrete.first = a.frm_size.discrete.width;
                  discrete.second = a.frm_size.discrete.height;
@@ -232,6 +236,7 @@ void CameraPage::change_device(const char *in_device){
     }
 
     camerainfo.format =  CurrentDeviceInfo::available_format;
+    camerainfo.format = V4L2_PIX_FMT_MJPEG;
     camerainfo.width = 1920;
     camerainfo.height = 1080;
     camerainfo.fps = 30;

@@ -60,6 +60,14 @@ void Setting::init_ui(){
     quit->setFixedHeight(40);
     help->setFixedHeight(40);
 
+#ifdef __V10__
+    set->setFocusPolicy(Qt::NoFocus);
+    about->setFocusPolicy(Qt::NoFocus);
+    theme->setFocusPolicy(Qt::NoFocus);
+    quit->setFocusPolicy(Qt::NoFocus);
+    help->setFocusPolicy(Qt::NoFocus);
+#endif
+
     delaylab->setText(tr("Delayed shooting"));
     mirrorlab->setText(tr("Image mirroring"));
     setlab->setText(tr("setting"));
@@ -149,6 +157,7 @@ void Setting::init_ui(){
 #ifndef __V10__
     vlayout->addWidget(theme);
 #endif
+
     vlayout->addWidget(help);
     vlayout->addWidget(about);
     vlayout->addWidget(quit);
