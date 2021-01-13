@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=kylin-camera
+Name[zh_CN]=麒麟摄像头
+Name[bo_CN]=གླང་ཆེན་གྱི་བརྙན་མིག་
+GenericName[bo_CN]=གླང་ཆེན་གྱི་བརྙན་མིག་
+Comment[bo_CN]=ཆི་ལིན་བརྙན་མིག་ནི་ནང་གསེས་དོན་ཚན་གཅིག་ནི་ཆི་ལིན་མཉེན་ཆས་གསར་སྤེལ་གྱི་པར་ལེན་བརྙན་ལེན་མཉེན་།
+Comment[zh_CN]=麒麟摄像头是一款由麒麟软件开发的拍照摄像软件
+Comment=Kylin Camera is a camera software developed by Kirin Software
+Exec=/usr/bin/kylin-camera
+Icon=kylin-camera
+Type=Application
+Categories=GNOME;Utility;

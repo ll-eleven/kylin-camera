@@ -58,7 +58,7 @@ Button::Button(QWidget *parent)
       "height: 32px;"
       "background: #3D6BE5;"
       "opacity: 1;"
-      "border-radius: 10px;";
+      "border-radius: 4px;";
 
     cheese_stop->setFixedSize(50,50);
     cheese_vedio->setFixedSize(50,50);
@@ -76,12 +76,12 @@ Button::Button(QWidget *parent)
         voice->hide();
         stop->hide();
         vedio_mode = false;
-        capture->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
+        capture->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:4px;}");
     //    vedio->setStyleSheet("QPushButton{background-color:#000000}");
     }
   else{
       vedio_mode = true;
-      vedio->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
+      vedio->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:4px;}");
 //      capture->setStyleSheet("QPushButton{background-color:#000000}");
       cheese->hide();
       cheese_vedio->show();
@@ -90,7 +90,7 @@ Button::Button(QWidget *parent)
     }
 
     QString btnStyle = "QPushButton{background-color:#3D6BE5}"
-                     "QPushButton{border-radius:10px;}"
+                     "QPushButton{border-radius:4px;}"
                      "QPushButton:hover{background-color:rgb(180,180,180);}"
                      "QPushButton:pressed{background-color:rgb(180,180,180);}";
 
@@ -196,7 +196,7 @@ void Button::capture_click(){
 //        voice->hide();
 //        stop->hide();
         vedio_mode = false;
-        capture->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
+        capture->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:4px;}");
         vedio->setStyleSheet("QPushButton{background-color:#000000}");
         set->setValue("model",1);
     }
@@ -207,7 +207,7 @@ void Button::vedio_click(){
         vedio_mode = true;
 //        voice->show();
 //        stop->show();
-        vedio->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
+        vedio->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:4px;}");
         capture->setStyleSheet("QPushButton{background-color:#000000}");
         cheese->hide();
         cheese_vedio->show();
@@ -218,7 +218,7 @@ void Button::vedio_click(){
 void Button::Burst_click(){
 //    if(!Burst_mode){
 //        Burst_mode = true;
-//        Burst->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
+//        Burst->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:4px;}");
 //        capture->setStyleSheet("QPushButton{background-color:#000000}");
 //        vedio->setStyleSheet("QPushButton{background-color:#000000}");
 
@@ -283,7 +283,7 @@ void Button::restore_click(){
 
 void Button::picture_click(){
     if(!picturepage_show){
-        picture->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:10px;}");
+        picture->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:4px;}");
         picturepage_show = true;
     }
     else{
