@@ -114,7 +114,9 @@ Button::Button(QWidget *parent)
     vedio->setProperty("useIconHighlightEffect", 0x2);
     vedio->setFlat(true);
 
-
+    picture->setProperty("isWindowButton", 0x1);
+    picture->setProperty("useIconHighlightEffect", 0x2);
+    picture->setFlat(true);
 //  capture->setStyleSheet(btnStyle);
 //  cheese->setStyleSheet(btnStyle);
 //  stop->setStyleSheet(btnStyle);
@@ -199,6 +201,14 @@ void Button::capture_click(){
         capture->setStyleSheet("QPushButton{background-color:#3D6BE5;border-radius:4px;}");
         vedio->setStyleSheet("QPushButton{background-color:#000000}");
         set->setValue("model",1);
+
+        capture->setProperty("isWindowButton", 0x1);
+        capture->setProperty("useIconHighlightEffect", 0x2);
+        capture->setFlat(true);
+
+        vedio->setProperty("isWindowButton", 0x1);
+        vedio->setProperty("useIconHighlightEffect", 0x2);
+        vedio->setFlat(true);
     }
 }
 
@@ -212,6 +222,14 @@ void Button::vedio_click(){
         cheese->hide();
         cheese_vedio->show();
         set->setValue("model",0);
+
+        capture->setProperty("isWindowButton", 0x1);
+        capture->setProperty("useIconHighlightEffect", 0x2);
+        capture->setFlat(true);
+
+        vedio->setProperty("isWindowButton", 0x1);
+        vedio->setProperty("useIconHighlightEffect", 0x2);
+        vedio->setFlat(true);
     }
 }
 

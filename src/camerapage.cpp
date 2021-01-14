@@ -141,7 +141,7 @@ void CameraPage::creatCameraPage(const char *in_devname){
         }
     }
 
-
+    
     camera_info.format = CurrentDeviceInfo::available_format;
     camera_info.width = CurrentDeviceInfo::available_size.front().first;
     camera_info.height = CurrentDeviceInfo::available_size.front().second;
@@ -204,7 +204,9 @@ void CameraPage::change_device(const char *in_device){
     V4l2DeviceInfo device_info;
     memset(&device_info,0X00,sizeof(V4l2DeviceInfo));
     memcpy(device_info.dev_path, in_device, strlen(in_device)+1);
+    KylinCamera::enum_device(&device_info);
 
+    CurrentDeviceInfo::available_size.clear();
     // 获取摄像头支持的格式和分辨率
     for(TypePixFormats fmt : device_info.fmt_supported){
         qDebug ()<< "description : "  << fmt.frm_sizes_len;
@@ -274,6 +276,11 @@ void CameraPage::timeEvent()
 
     //之前有设备，并且当前设备被拔出,拔出的设备时当前使用设备,当前设备已不存在
     if(has_device && current_indevice && access(current_indevice,F_OK) != 0){
+        //解决在录像过程中拔出摄像头的问题
+        if(Button::vedio_start){
+            ;
+        }
+
         //设备列表非空，更新当前设备
         if(!cameras->empty()){
             change_device(cameras->at(0).deviceName().toLocal8Bit().data());

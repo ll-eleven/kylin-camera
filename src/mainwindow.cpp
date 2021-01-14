@@ -412,7 +412,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    if(!press) return;
+    if(!press || event->button() == Qt::RightButton) return;
     // 持续按住才做对应事件
 //    if(pTitleBar->m_leftButtonPressed) {
 //        将父窗体移动到父窗体原来的位置加上鼠标移动的位置：event->globalPos()-m_start

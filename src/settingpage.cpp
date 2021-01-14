@@ -13,8 +13,9 @@ SettingPage::SettingPage()
 {
 
 #ifdef __V10__
-    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setStyleSheet("background-color:#000000");
 #endif
+
     this->hide();
     this->setWindowTitle(tr("setting"));
 //    this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
@@ -24,8 +25,8 @@ SettingPage::SettingPage()
 }
 
 void SettingPage::Geometry(QPoint *pos){
-        this->setGeometry(pos->x(),pos->y(),0,0);
-        this->setFixedSize(340,238);
+    this->setGeometry(pos->x(),pos->y(),0,0);
+    this->setFixedSize(340,238);
 }
 
 
@@ -191,7 +192,9 @@ void SettingPage::change_item(){
         if(cameraDevice)
             cameraDevice->addItem(cameraInfo.description());
         qDebug() << "device : " << cameraInfo.deviceName();
-        camera_name2dev[cameraInfo.description()] = cameraInfo.deviceName();
+        if(!camera_name2dev.count(cameraInfo.description())){
+            camera_name2dev[cameraInfo.description()] = cameraInfo.deviceName();
+        }
     }
 
     //添加录音设备

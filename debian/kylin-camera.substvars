@@ -1,3 +1,0 @@
-shlibs:Depends=libc6 (>= 2.17), libgcc-s1 (>= 3.0), libgpac4 (>= 0.5.2), libqt5core5a (>= 5.5.0), libqt5dbus5 (>= 5.0.2), libqt5gui5 (>= 5.8.0) | libqt5gui5-gles (>= 5.8.0), libqt5multimedia5 (>= 5.6.0~beta), libqt5widgets5 (>= 5.6.0~beta), libqt5x11extras5 (>= 5.6.0), libstdc++6 (>= 4.1.1), libx11-6, libx264-155
-misc:Depends=
-misc:Pre-Depends=
