@@ -20,7 +20,7 @@ Setting::Setting(QWidget *parent)
 
 
 void Setting::init_ui(){
-    this->setAttribute(Qt::WA_StyledBackground);
+//    this->setAttribute(Qt::WA_StyledBackground);
 //    this->setAttribute(Qt::WA_TranslucentBackground, false);//窗体透明
     mirrorlab = new QLabel;
     delaylab = new QLabel;
@@ -35,7 +35,7 @@ void Setting::init_ui(){
     set = new QPushButton;
     theme = new QPushButton;
     help = new QPushButton;
-    about = new QPushButton(this);
+    about = new QPushButton;
     mirrorbtn = new SwitchButton;
     delaybtn = new SwitchButton;
     quit = new QPushButton;
@@ -89,18 +89,19 @@ void Setting::init_ui(){
             "opacity: 0.91;";
 
 
-    mirrorlab->setStyleSheet(labStyle);
-    delaylab->setStyleSheet(labStyle);
-    setlab->setStyleSheet(labStyle);
-    themelab->setStyleSheet(labStyle);
-    helplab->setStyleSheet(labStyle);
-    aboutlab->setStyleSheet(labStyle);
-    quitlab->setStyleSheet(labStyle);
+//    mirrorlab->setStyleSheet(labStyle);
+//    delaylab->setStyleSheet(labStyle);
+//    setlab->setStyleSheet(labStyle);
+//    themelab->setStyleSheet(labStyle);
+//    helplab->setStyleSheet(labStyle);
+//    aboutlab->setStyleSheet(labStyle);
+//    quitlab->setStyleSheet(labStyle);
 
-    set->setStyleSheet(btnStyle);
-    theme->setStyleSheet(btnStyle);
-    help->setStyleSheet(btnStyle);
-    quit->setStyleSheet(btnStyle);
+    set->setFlat(true);
+    theme->setFlat(true);
+    help->setFlat(true);
+    quit->setFlat(true);
+    about->setFlat(true);
 
 
     //设置按钮布局

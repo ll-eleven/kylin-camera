@@ -39,6 +39,8 @@ public:
 signals:
 
 
+public slots:
+
 private slots:
     void capture_click();
     void vedio_click();

@@ -69,8 +69,10 @@ void CameraPage::displayCameraError(){
     layout->addWidget(widget2);
     layout->addStretch(10);
     No_device_icon->setPixmap(QPixmap(":/image/camera-disconnected.png"));
+    
     No_device_icon->setProperty("isWindowButton", 0x1);
     No_device_icon->setProperty("useIconHighlightEffect", 0x2);
+    
     No_device_lab->setText(tr("No device were found"));
 #ifdef __V10__
     No_device_lab->setStyleSheet("color:#FFFFFF;"

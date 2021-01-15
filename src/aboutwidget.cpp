@@ -3,7 +3,7 @@
 #include <QScreen>
 #include <QRect>
 #include <QGuiApplication>
-#define VERSION "1.1.2kord8"
+#define VERSION "1.1.2kord10"
 
 AboutWidget::AboutWidget(const StyleWidgetAttribute& swa, QString dialogTitleText, bool isDialog )
     :local_swa(swa)

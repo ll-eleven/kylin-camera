@@ -77,6 +77,11 @@ public:
     static char* current_indevice;
     static QList<QCameraInfo> *cameras;
     static QList<QAudioDeviceInfo> *audios;
+
+signals:
+    //设备被拔出
+    void device_pull_out();
+
 public slots:
     void updateRecordTime();
     //

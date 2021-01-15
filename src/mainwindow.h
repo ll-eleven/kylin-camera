@@ -97,6 +97,8 @@ private slots:
     void initHelp();
     void thememenu();
     void listWidgetUpdate(int);
+    //异常处理
+    void exception_handing();
 protected:
     virtual void mousePressEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);

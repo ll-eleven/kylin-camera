@@ -93,7 +93,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(devRead,&DeviceRead::finish,camerapage,&CameraPage::timeEvent);
     //启动计时器，监听设备，
     connect(watcher,&QFileSystemWatcher::directoryChanged,devRead,[=](){
-        //devRead = new DeviceRead;
         devRead->start();
     });
 //    connect(devRead,&QFileSystemWatcher::directoryChanged,setPage,&SettingPage::change_item);
@@ -192,7 +191,6 @@ void MainWindow ::setCommonUI(){
     connect(pTitleBar,&TitleBar::close,setPage,&SettingPage::close);
     //
     connect(btnPage->cheese, SIGNAL(clicked()), this, SLOT(clickPhoto()));
-    connect(this,SIGNAL(click_vedio()),this,SLOT(vedioDisplay()));
     connect(btnPage->cheese_vedio, SIGNAL(clicked()), this, SLOT(clickStartRecord()));
 //    connect(btnPage->restore,&QPushButton::clicked,this,&MainWindow::clickRestore);
     connect(btnPage->stop,&QPushButton::clicked,this,&MainWindow::clickPause);
@@ -207,10 +205,13 @@ void MainWindow ::setCommonUI(){
     connect(setPage,SIGNAL(dir_change()),this,SLOT(save_dir_change()));
     connect(setPage,&SettingPage::change_resolutions,camerapage,&CameraPage::change_resolution);
     connect(setPage,&SettingPage::change_dev,camerapage,&CameraPage::change_device);
+
+    connect(camerapage->laytop,&QPushButton::clicked,this,&MainWindow::stayTop);
+    connect(camerapage,&CameraPage::device_pull_out,this,&MainWindow::exception_handing);
+
     connect(setWid->set,&QPushButton::clicked,this,&MainWindow::settingPageShow);
 //    connect(setWid->mirrorbtn,&SwitchButton::toggled,this,&MainWindow::mirror);
     connect(setWid->quit,&QPushButton::clicked,this,&MainWindow::quit);
-    connect(camerapage->laytop,&QPushButton::clicked,this,&MainWindow::stayTop);
     connect(setWid->about,&QPushButton::clicked,this,&MainWindow::initAbout);
     connect(setWid->help,&QPushButton::clicked,this,&MainWindow::initHelp);
     connect(setWid->theme,&QPushButton::clicked,this,&MainWindow::thememenu);
@@ -435,18 +436,24 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
 
 void MainWindow::funcListHandle(bool){
+//    QWidget *a = new QWidget(this);
+//    a->setAttribute(Qt::WA_TranslucentBackground, false);
+//    a->setStyleSheet("background-color:#000000");
+//    a->show();
+//    a->raise();
     if(setWid->isHidden()){
         QPoint p = pTitleBar->funcListButton->geometry().bottomLeft();
         setWid->show();
         setWid->raise();
+        setWid->setAutoFillBackground(true);
         //设置界面窗口大小暂时设置成魔数
 //        setWid->geometry()
         setWid->setGeometry(p.x() - 130,p.y() + 4,160,288);
-        setWid->setStyleSheet(
-            "QWidget{border-radius:6px;background-color: #303033;}"
-            "box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.75);"
-            "opacity: 1;"
-        );
+//        setWid->setStyleSheet(
+////            "QWidget{border-radius:6px;background-color: #303033;}"
+//            "box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.75);"
+//            "opacity: 1;"
+//        );
     }
     else{
         setWid->hide();
@@ -755,13 +762,7 @@ void MainWindow::settingPageShow(){
 
 //点击连拍按钮
 void MainWindow::clickBrust(){
-    //打开连拍
-    if(!Burst_mode){
 
-    }
-    else{
-
-    }
 }
 
 void MainWindow::quit(){
@@ -813,4 +814,14 @@ void MainWindow::thememenu(){
 //    themeUpdate();
 //    connect(themeMenu,&QMenu::triggered,this,&menuModule::triggerThemeMenu);
 
+}
+
+//拔出摄像头的异常处理
+void MainWindow::exception_handing(){
+    if(Button::vedio_start){
+        Button::vedio_start = false;
+        clickStopRecord();
+        btnPage->cheese_stop->hide();
+        btnPage->cheese_vedio->show();
+    }
 }
