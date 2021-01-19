@@ -38,8 +38,9 @@ MainWindow::MainWindow(QWidget *parent)
     //从配置文件读取
     imagePath = setting->value("save_path").toString();
 //    picture_number = setting->value("piacure_number").toInt();
-
-
+#ifdef __V10__
+    this->setWindowIcon(QIcon(":/image/camera-app@2x.png"));
+#endif
     if(imagePath == "")
     {
         imagePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);

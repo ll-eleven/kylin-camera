@@ -13,7 +13,7 @@ SettingPage::SettingPage()
 {
 
 #ifdef __V10__
-    this->setStyleSheet("background-color:#000000");
+    this->setStyleSheet("{background-color:#000000;}");
 #endif
 
     this->hide();

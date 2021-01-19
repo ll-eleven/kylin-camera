@@ -1,0 +1,10 @@
+Package: kylin-camera
+Version: 1.1.2kord10~rc3
+Architecture: arm64
+Maintainer: songxikang <songxikang@kylinos.cn>
+Installed-Size: 343
+Depends: libqt5sql5-sqlite, kylincameralibs, libx264-dev, libgpac-dev, libc6 (>= 2.17), libgcc1 (>= 1:3.0), libqt5core5a (>= 5.6.0~beta), libqt5dbus5 (>= 5.0.2), libqt5gui5 (>= 5.3.0) | libqt5gui5-gles (>= 5.3.0), libqt5multimedia5 (>= 5.3.0), libqt5widgets5 (>= 5.6.0~beta), libstdc++6 (>= 4.1.1)
+Section: utils
+Priority: optional
+Homepage: https://github.com/ubuntukylin/kylin-camera
+Description: kylin-camera
