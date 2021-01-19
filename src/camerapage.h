@@ -22,11 +22,14 @@
 #include <QStatusBar>
 #include <QMediaRecorder>
 #include <QTimer>
+<<<<<<< HEAD
 #include <QFileSystemWatcher>
 #include <QStackedWidget>
 #include <QApplication>
 #include <QFileInfoList>
 #include "currentdeviceinfo.h"
+=======
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 #include "button.h"
 #include "VideoDisplay.h"
 #include "kylincamera_global.h"
@@ -82,6 +85,7 @@ signals:
     //设备被拔出
     void device_pull_out();
 
+<<<<<<< HEAD
 public slots:
     void updateRecordTime();
     //
@@ -99,6 +103,25 @@ public slots:
     //设置分辨率
     void change_resolution(QPair<uint,uint>);
 
+=======
+  KylinCamera *camera;
+  VideoCapture *video;
+  VideoDisplay *videoDisplay;
+  
+  QLabel *dead_time;
+  QWidget *dead_widget;
+  QTimer *time;
+  bool has_device;
+public slots:
+  void updateRecordTime();
+//  void setImageCapture();
+//  void setMediaRecorder();
+  void record();
+  void stop();
+  void pause();
+  void displayCameraError();
+  void timeEvent();
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 private:
     //创建显示界面
     //未发现摄像头的两个组件

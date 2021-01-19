@@ -20,6 +20,7 @@ QList<QAudioDeviceInfo> * CameraPage::audios = new QList<QAudioDeviceInfo>;
 CameraPage::CameraPage(QWidget *parent)
 : QStackedWidget(parent)
 {
+<<<<<<< HEAD
 
     No_device = new QWidget;
     cameraViewPage = new QWidget;
@@ -102,6 +103,16 @@ void CameraPage::creatCameraPage(const char *in_devname){
     camera = new KylinCamera(cameraViewPage);
     layout = new QStackedLayout(cameraViewPage);
 
+=======
+    //倒计时数字
+//    dead_widget->setGeometry(0,0,this->width(),this->height());
+//    hlayout->addSpacing(100);
+//    hlayout->addWidget(dead_time);
+//    hlayout->addSpacing(100);
+//    dead_widget->setLayout(hlayout);
+
+    const char *in_devname = "/dev/video0";
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
     V4l2DeviceInfo device_info;
     memset(&device_info,0X00,sizeof(V4l2DeviceInfo));
     memcpy(device_info.dev_path, in_devname, strlen(in_devname)+1);
@@ -113,6 +124,7 @@ void CameraPage::creatCameraPage(const char *in_devname){
     memset(&camera_info,0X00,sizeof(KylinCameraInfo));
     memcpy(camera_info.devname, in_devname, strlen(in_devname)+1);
 
+<<<<<<< HEAD
 //    qDebug() << "height:"<< device_info.fmt_supported[0].frm_sizes[0].frm_size.discrete.height << "\nwidth :"<< camera_info.width;
 //    camera_info.format = V4L2_PIX_FMT_MJPEG;
 
@@ -198,6 +210,63 @@ void CameraPage::change_resolution(QPair<uint, uint> resolution){
 }
 
 
+=======
+    if(access(in_devname,F_OK) == 0){
+
+        memset(&device_info,0X00,sizeof(V4l2DeviceInfo));
+        memcpy(device_info.dev_path, in_devname, strlen(in_devname));
+
+        camera = new KylinCamera(this);
+        KylinCamera::enum_device(&device_info);
+        camera->fourcc(KylinCamera::enum_device(&device_info));
+
+        KylinCameraInfo camera_info;
+        memset(&camera_info,0X00,sizeof(KylinCameraInfo));
+
+        memcpy(camera_info.devname, in_devname, strlen(in_devname));
+        camera_info.width = 1920;
+        camera_info.height = 1080;
+        camera_info.fps = 30;
+        videoDisplay = camera->create(this, &camera_info);
+
+        videoDisplay->setWindowFlags(Qt::CustomizeWindowHint|Qt::FramelessWindowHint);
+
+  //      QHBoxLayout *layout = new QHBoxLayout(this);
+        QStackedLayout *stackedlayout = new QStackedLayout(this);
+        stackedlayout->setStackingMode(QStackedLayout::StackAll);
+        stackedlayout->setMargin(0);
+        stackedlayout->setSpacing(0);
+        stackedlayout->setGeometry(QRect(0,100,500,500));
+        stackedlayout->addWidget(videoDisplay);
+        has_device = 1;
+    }
+    //未接入设备，关闭应用
+    else{
+        QMessageBox::question(this,tr("No devices were found"),tr("No devices were found"),0);
+        has_device = 0;
+//        time = new QTimer;
+//        time->start();
+//        connect(time,&QTimer::timeout, this, &CameraPage::timeEvent);
+//        time->start(1000);
+
+//        exit(-1);
+      }
+//  ui->verticalLayout->addWidget(videoDisplay);
+
+//  connect(ui->restoreButton, SIGNAL(clicked()), this, SLOT(clickRestore()));
+//  connect(ui->resumeButton, SIGNAL(clicked()), this, SLOT(clickPause()));
+//  connect(ui->setButton, SIGNAL(clicked()), this, SLOT(clickSet()));
+//  connect(ui->photoButton, SIGNAL(clicked()), this, SLOT(clickPhoto()));
+//  connect(ui->recordStartButton, SIGNAL(clicked()), this, SLOT(clickStartRecord()));
+//  connect(ui->recordStopButton, SIGNAL(clicked()), this, SLOT(clickStopRecord()))
+}
+
+void CameraPage::displayCameraError(){
+
+  lab->setText("未发现设备");
+}
+
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 
 //改变摄像头设备
 void CameraPage::change_device(const char *in_device){
@@ -251,6 +320,7 @@ void CameraPage::change_device(const char *in_device){
     strcpy(current_indevice,in_device);
 }
 
+<<<<<<< HEAD
 //得到设备支持的格式
 unsigned int getCameraFormat(const char *in_device){
 
@@ -262,6 +332,21 @@ void CameraPage::camera_set_param(KylinCameraInfo *device_info){
     camera->camera_set_param(device_info);
 }
 
+=======
+
+
+void CameraPage::stop(){
+  mediaRecorder->stop();
+}
+
+
+void CameraPage::record(){
+  mediaRecorder->record();
+  updateRecordTime();
+}
+
+
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 void CameraPage::updateRecordTime()
 {
 //    QString str = QString("Recorded %1 sec").arg(mediaRecorder->duration()/1000);
@@ -351,4 +436,40 @@ void CameraPage::timeEvent()
 //    else{
 
 //    }
+}
+
+
+void CameraPage::timeEvent(){
+  const char *in_devname = "/dev/video0";
+  V4l2DeviceInfo device_info;
+  if(access(in_devname,F_OK) == 0){
+
+    memset(&device_info,0X00,sizeof(V4l2DeviceInfo));
+    memcpy(device_info.dev_path, in_devname, strlen(in_devname));
+    camera = new KylinCamera(this);
+//      KylinCamera::enum_device(&device_info);
+//      camera->fourcc(KylinCamera::enum_device(&device_info));
+    KylinCameraInfo camera_info;
+    memset(&camera_info,0X00,sizeof(KylinCameraInfo));
+
+    memcpy(camera_info.devname, in_devname, strlen(in_devname));
+    qDebug() << camera_info.format;
+    camera_info.format = V4L2_PIX_FMT_MJPEG;
+    qDebug() << camera_info.format;
+//      camera_info.width = 640;
+//      camera_info.height = 480;
+//      camera_info.fps = 30;
+    videoDisplay = camera->create(this, &camera_info);
+    videoDisplay->setWindowFlags(Qt::CustomizeWindowHint|Qt::FramelessWindowHint);
+
+//      QHBoxLayout *layout = new QHBoxLayout(this);
+    QStackedLayout *stackedlayout = new QStackedLayout(this);
+    stackedlayout->setStackingMode(QStackedLayout::StackAll);
+    stackedlayout->setMargin(0);
+    stackedlayout->setSpacing(0);
+    stackedlayout->setGeometry(QRect(0,100,500,500));
+    stackedlayout->addWidget(videoDisplay);
+    has_device = 1;
+    time->stop();
+  }
 }

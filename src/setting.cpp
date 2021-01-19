@@ -3,12 +3,15 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QMessageBox>
+<<<<<<< HEAD
 #include <QErrorMessage>
 #include <QApplication>
 #include "unistd.h"
 
 
 
+=======
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 Setting::Setting(QWidget *parent)
   : QWidget(parent)
 {
@@ -175,5 +178,23 @@ void Setting::init_ui(){
 //    theme->setMenu(themeMenu);
 
 }
+<<<<<<< HEAD
 
 
+=======
+//void Setting::dir_change(){}
+void Setting::dir_click(){
+  current_dir = QFileDialog::getExistingDirectory(nullptr,tr("Select the directory"),":/home",QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+  QString first = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+  if(QDir(current_dir).exists() && current_dir != "" && current_dir.contains(first,Qt::CaseSensitive)){
+    current_dir.append('/');
+    current_dir_lab->setText(current_dir);
+    qDebug() << "current_dir"<< current_dir;
+    emit dir_change();
+  }
+//  else{
+//      QMessageBox::question(this,tr("No effect"),tr("Can not set save path"),0);
+//    }
+
+}
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8

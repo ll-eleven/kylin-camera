@@ -137,6 +137,7 @@ private:
     //监听设备文件
     QFileSystemWatcher *watcher;
 
+<<<<<<< HEAD
     QTimer *timer = nullptr;
     //倒计时
     QWidget *dead_time;
@@ -152,5 +153,17 @@ private:
     bool is_vedio = false;
     bool Burst_mode = false;
     bool press = false;
+=======
+  QTimer *timer;
+  //倒计时
+  QWidget *dead_time;
+
+  QProcess *proc;
+  void mousePressEvent(QMouseEvent *event);
+  int index = -1;
+  int timerId;
+  int dead_time_sec;
+  int dead_time_sec_tmp = 0;
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 };
 #endif // MAINWINDOW_H

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 kylin-camera (1.1.2kord10~rc3) v100; urgency=medium
 
   * 增加了相册缓存之前拍的照片的功能
@@ -107,6 +108,8 @@ kylin-camera (1.1.1kord7~rc1) v101; urgency=medium
 
  -- songxikang <songxikang@kylinos.cn>  Fri, 4 Dec 2020 20:26:06 +0800
 
+=======
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 kylin-camera (1.1.1kord5rc1) v101; urgency=medium
 
   * 解决mips编译不通过的问题

@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
   : QWidget(parent)
 {
 
+<<<<<<< HEAD
     proc = new QProcess();
     setWindowTitle(tr("kylin-camera"));
     //从配置文件读取
@@ -51,6 +52,23 @@ MainWindow::MainWindow(QWidget *parent)
         }
         else
         {
+=======
+  proc = new QProcess();
+
+  //从配置文件读取
+  imagePath = setting->value("save_path").toString();
+
+  if(imagePath=="")
+  {
+      imagePath=QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+      QString locale = QLocale::system().name();
+      if (locale == "zh_CN")
+      {
+          imagePath+=QStringLiteral("/图片/麒麟摄像头/");
+      }
+      else
+      {
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
           imagePath+="/Pictures/kylin-camera/";
         }
         QDir dir(imagePath);
@@ -394,6 +412,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
 //鼠标按下事件,收起设置菜单
 void MainWindow::mousePressEvent(QMouseEvent *event){
 
+<<<<<<< HEAD
     press = true;
     int x = event->x();
     int y = event->y();
@@ -410,6 +429,20 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
         setWid->hide();
     }
 
+=======
+  int x = event->x();
+  int y = event->y();
+  //在小窗口模式下，点击是否在设置区域内
+  int in_setting = x > 437 && x < 696 && y > 42 && y < 244;
+  QPushButton *pButton = qobject_cast<QPushButton *>(sender());
+  qDebug() << pButton;
+  if(event->button() == Qt::LeftButton && pTitleBar->m_setButtonPressed && !in_setting ||
+        pButton == pTitleBar->m_pMaximizeButton)
+  {
+    setWid->hide();
+    pTitleBar->m_setButtonPressed = true;
+  }
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
@@ -569,7 +602,12 @@ void MainWindow::imageDisplay(QString filename)
     setting->setValue("picture_number",picture_number);
 
     imageItem->setIcon(QIcon(fitPixmap));
+<<<<<<< HEAD
     imageItem->setStatusTip(filename);
+=======
+    imageItem->setStatusTip(trueName(filename));
+    qDebug()<<"==="<<trueName(filename);
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 
     viewpage->listWidget->addItem(imageItem);
     viewpage->listWidget->scrollToBottom();
@@ -641,7 +679,11 @@ void MainWindow::stayTop()
 void MainWindow::itemDoubleClicked(QListWidgetItem *item)
 {
     //点击打开图片
+<<<<<<< HEAD
     QString fileName = trueName(item->statusTip());
+=======
+    QString fileName=item->statusTip();
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
     qDebug()<< "fileName =" << fileName;
     QFileInfo dir(fileName);
     if(dir.exists())
@@ -658,7 +700,20 @@ void MainWindow::itemDoubleClicked(QListWidgetItem *item)
 
 void MainWindow::startCommend(QString cmd)
 {
+<<<<<<< HEAD
     proc->startDetached(cmd);
+=======
+//  system(cmd.toLatin1().data());
+//    cmd.append("\n");
+//  QStringList strL(cmd);
+//    proc->start("xdg-open", strL);
+    proc->startDetached(cmd);
+//    proc->start(cmd);
+    /*proc->write(cmd.toLatin1().data());*/
+    /*proc->waitForFinished(); */
+
+
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 }
 
 
@@ -667,11 +722,25 @@ void MainWindow::itemclicked(QListWidgetItem* item){
     qDebug() << index;
 }
 
+<<<<<<< HEAD
 
 void MainWindow::listWidgetUpdate(int num){
     if(0 == num){
         loadPhoto();
     }
+=======
+//删除所选项
+void MainWindow::delete_picture()
+{
+    if(index == viewpage->listWidget->count())
+        index--;
+    if(index == -1) return;
+    //删除本地图片
+    QString temp("rm -rf ");
+    temp.append(trueName(viewpage->listWidget->item(index)->statusTip()));
+    startCommend(temp);
+    viewpage->listWidget->takeItem(index);
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 }
 
 void MainWindow::loadPhoto(){
@@ -696,10 +765,17 @@ void MainWindow::loadPhoto(){
 
 //更改保存路径
 void MainWindow::save_dir_change(){
+<<<<<<< HEAD
     imagePath = setPage->current_dir;
     setting->setValue("save_path",imagePath);
     //  imagePath.append("/");
     qDebug() << "save dir change" << imagePath;
+=======
+  imagePath = setWid->current_dir;
+  setting->setValue("save_path",imagePath);
+//  imagePath.append("/");
+  qDebug() << "save dir change" << imagePath;
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
 }
 
 //计时器触发函数
@@ -708,7 +784,10 @@ void MainWindow::timeEvent()
     if(dead_time_sec_tmp >= dead_time_sec)
     {
         timer->stop();
+<<<<<<< HEAD
         Button::vedio_start = 0; //开启录像切换功能
+=======
+>>>>>>> 52a1b722c4383b6f978260917e89440ed6c81ff8
         dead_time_sec_tmp = 0;
         camerapage->dead_time->hide();
         QString name=creatName();
